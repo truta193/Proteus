@@ -24,7 +24,7 @@ import androidx.compose.ui.text.input.VisualTransformation
 @Composable
 fun PasswordInputField(
     labelValue: String, icon : ImageVector,
-    errorStatus: Boolean = true,
+    errorStatus: Boolean = false,
     onTextSelected: (String) -> Unit
 ) {
 

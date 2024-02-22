@@ -16,7 +16,7 @@ import androidx.compose.ui.text.input.ImeAction
 @Composable
 fun InputField(
     labelValue: String, icon: ImageVector,
-    errorStatus: Boolean = true,
+    errorStatus: Boolean = false,
     onTextChanged: (String) -> Unit
 ) {
     val textValue = remember {

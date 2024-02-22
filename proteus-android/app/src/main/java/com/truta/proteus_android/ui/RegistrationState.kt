@@ -7,6 +7,8 @@ data class RegistrationState(
 
     var emailError: Boolean = false,
     var passwordError: Boolean = false,
-    var confirmPasswordError: Boolean = false
+    var confirmPasswordError: Boolean = false,
+
+    var initialState: Boolean = true
 
 )

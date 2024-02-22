@@ -17,6 +17,10 @@ class RegistrationViewModel @Inject constructor(
     var uiState = mutableStateOf(RegistrationState())
 
     fun onEvent(event: RegistrationEvent) {
+        uiState.value = uiState.value.copy(
+            initialState = false
+        )
+
         when (event) {
             is RegistrationEvent.EmailChanged -> {
                 uiState.value = uiState.value.copy(
