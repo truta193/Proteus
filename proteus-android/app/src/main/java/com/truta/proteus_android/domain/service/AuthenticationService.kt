@@ -1,4 +1,4 @@
-package com.truta.proteus_android.service
+package com.truta.proteus_android.domain.service
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
