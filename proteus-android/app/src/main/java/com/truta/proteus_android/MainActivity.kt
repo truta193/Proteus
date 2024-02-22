@@ -11,15 +11,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.truta.proteus_android.domain.MainViewModel
 import com.truta.proteus_android.ui.theme.ProteusAndroidTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ProteusAndroidTheme {
+                val viewModel = hiltViewModel<MainViewModel>()
+
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -30,20 +36,22 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+
         val db = Firebase.firestore
-        val user = hashMapOf(
-            "first" to "Ada",
-            "last" to "Lovelace",
-            "born" to 1815,
-        )
-        db.collection("proteus-test")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                Log.d("DB_TEST", "DocumentSnapshot added with ID: ${documentReference.id}")
-            }
-            .addOnFailureListener { e ->
-                Log.w("DB_TEST", "Error adding document", e)
-            }
+        db.useEmulator("192.168.0.122", 8080)
+//        val user = hashMapOf(
+//            "first" to "Mike",
+//            "last" to "Lovelace",
+//            "born" to 1815,
+//        )
+//        db.collection("users")
+//            .add(user)
+//            .addOnSuccessListener { documentReference ->
+//                Log.d("DB_TEST", "DocumentSnapshot added with ID: ${documentReference.id}")
+//            }
+//            .addOnFailureListener { e ->
+//                Log.w("DB_TEST", "Error adding document", e)
+//            }
     }
 }
 
