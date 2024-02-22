@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.truta.proteus_android.ui.RegistrationScreen
 import com.truta.proteus_android.ui.navigation.Navigation
 import com.truta.proteus_android.ui.theme.ProteusAndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +20,7 @@ class MainActivity : ComponentActivity() {
         
         setContent {
             ProteusAndroidTheme {
-                Navigation()
+                RegistrationScreen()
             }
         }
     }
