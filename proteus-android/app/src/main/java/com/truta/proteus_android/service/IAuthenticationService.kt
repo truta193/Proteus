@@ -1,6 +1,6 @@
-package com.truta.proteus_android.domain.service
+package com.truta.proteus_android.service
 
-import com.truta.proteus_android.domain.model.User
+import com.truta.proteus_android.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface IAuthenticationService {

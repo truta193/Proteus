@@ -1,4 +1,4 @@
-package com.truta.proteus_android
+package com.truta.proteus_android.ui.screen
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -11,7 +11,7 @@ open class AppViewModel : ViewModel() {
     fun launchCatching(block: suspend CoroutineScope.() -> Unit) =
         viewModelScope.launch(
             CoroutineExceptionHandler { _, throwable ->
-                Log.d("NOTES APP ERROR", throwable.message.orEmpty())
+                Log.d("Proteus Error", throwable.message.orEmpty())
             },
             block = block
         )

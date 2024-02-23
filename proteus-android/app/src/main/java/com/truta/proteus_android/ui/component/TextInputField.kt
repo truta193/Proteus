@@ -1,7 +1,9 @@
-package com.truta.proteus_android.ui.components
+package com.truta.proteus_android.ui.component
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -9,30 +11,32 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun InputField(
-    labelValue: String, icon: ImageVector,
+fun TextInputField(
+    labelValue: String,
+    icon: ImageVector,
+    keyboardOptions: KeyboardOptions,
+    modifier: Modifier = Modifier,
     errorStatus: Boolean = false,
     errorMessage: String = "",
     onTextChanged: (String) -> Unit
 ) {
-    val textValue = remember {
+    val textValue = rememberSaveable {
         mutableStateOf("")
     }
 
-    val localFocusManager = LocalFocusManager.current
-
     OutlinedTextField(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         label = { Text(text = labelValue) },
-
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+        keyboardOptions = keyboardOptions,
         singleLine = true,
         maxLines = 1,
         value = textValue.value,
@@ -53,5 +57,21 @@ fun InputField(
                 )
             }
         }
+    )
+}
+
+@Preview
+@Composable
+fun InputFieldPreview() {
+    TextInputField(
+        labelValue = "Email",
+        icon = Icons.Rounded.Email,
+        errorStatus = false,
+        errorMessage = "",
+        keyboardOptions = KeyboardOptions.Default.copy(
+            keyboardType = KeyboardType.Text,
+            imeAction = ImeAction.Next
+        ),
+        onTextChanged = {}
     )
 }

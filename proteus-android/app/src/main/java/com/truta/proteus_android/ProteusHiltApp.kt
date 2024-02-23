@@ -5,7 +5,7 @@ import com.google.firebase.FirebaseApp
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MainApplication : Application() {
+class ProteusHiltApp : Application() {
 
     override fun onCreate() {
         super.onCreate()

@@ -1,11 +1,8 @@
-package com.truta.proteus_android.ui.components
+package com.truta.proteus_android.ui.component
 
-import android.graphics.drawable.VectorDrawable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -14,45 +11,41 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.truta.proteus_android.R
 
 @Composable
 fun PasswordInputField(
-    labelValue: String, icon: ImageVector,
+    labelValue: String,
+    icon: ImageVector,
+    keyboardOptions: KeyboardOptions,
+    modifier: Modifier = Modifier,
     errorStatus: Boolean = false,
     errorMessage: String = "",
     onTextSelected: (String) -> Unit
 ) {
 
     val localFocusManager = LocalFocusManager.current
-    val password = remember {
+    val password = rememberSaveable {
         mutableStateOf("")
     }
 
-    val passwordVisible = remember {
+    val passwordVisible = rememberSaveable {
         mutableStateOf(false)
     }
 
     OutlinedTextField(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth(),
         label = { Text(text = labelValue) },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            imeAction = ImeAction.Done
-        ),
+        keyboardOptions = keyboardOptions,
         singleLine = true,
-        keyboardActions = KeyboardActions {
-            localFocusManager.clearFocus()
-        },
         maxLines = 1,
         value = password.value,
         onValueChange = {
