@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
 
         Firebase.firestore.useEmulator("192.168.0.122", 8080)
         //Firebase.auth.useEmulator("192.168.0.122", 9099)
-        
+
         setContent {
             ProteusAndroidTheme {
                 RegistrationScreen()

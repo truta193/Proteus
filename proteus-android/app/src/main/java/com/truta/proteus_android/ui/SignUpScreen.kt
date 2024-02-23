@@ -1,6 +1,5 @@
 package com.truta.proteus_android.ui
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
@@ -42,19 +41,33 @@ fun RegistrationScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .imePadding()
-                .imeNestedScroll(),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
+                .imeNestedScroll()
         ) {
-            InputField(labelValue = "Email", icon = Icons.Rounded.Email, errorStatus = viewModel.uiState.value.emailError) {
-                viewModel.onEvent(RegistrationEvent.EmailChanged(it))
+            InputField(
+                labelValue = "Email",
+                icon = Icons.Rounded.Email,
+                errorStatus = viewModel.uiState.value.emailError,
+                errorMessage = "Email must be valid (e.g. name@domain.com)"
+            ) {
+                viewModel.onEvent(SignUpEvent.EmailChanged(it))
             }
 
-            PasswordInputField(labelValue = "Password", icon = Icons.Rounded.Lock , errorStatus = viewModel.uiState.value.passwordError) {
-                viewModel.onEvent(RegistrationEvent.PasswordChanged(it))
+            PasswordInputField(
+                labelValue = "Password",
+                icon = Icons.Rounded.Lock ,
+                errorStatus = viewModel.uiState.value.passwordError,
+                errorMessage = "Password must be at least 8 characters long"
+            ) {
+                viewModel.onEvent(SignUpEvent.PasswordChanged(it))
             }
 
-            PasswordInputField(labelValue = "Confirm Password", icon = Icons.Rounded.Lock , errorStatus = viewModel.uiState.value.confirmPasswordError) {
-                viewModel.onEvent(RegistrationEvent.ConfirmPasswordChanged(it))
+            PasswordInputField(
+                labelValue = "Confirm Password",
+                icon = Icons.Rounded.Lock ,
+                errorStatus = viewModel.uiState.value.confirmPasswordError,
+                errorMessage = if (!viewModel.uiState.value.passwordError) "Passwords do not match" else "Password must be at least 8 characters long"
+            ) {
+                viewModel.onEvent(SignUpEvent.ConfirmPasswordChanged(it))
             }
 
             Button(
@@ -65,7 +78,7 @@ fun RegistrationScreen() {
                     .height(48.dp),
 
                 onClick = {
-                    viewModel.onEvent(RegistrationEvent.RegisterButtonClicked)
+                    viewModel.onEvent(SignUpEvent.SignUpButtonClicked)
                 },
                 enabled = !viewModel.uiState.value.emailError && !viewModel.uiState.value.passwordError && !viewModel.uiState.value.confirmPasswordError && !viewModel.uiState.value.initialState
             ) {

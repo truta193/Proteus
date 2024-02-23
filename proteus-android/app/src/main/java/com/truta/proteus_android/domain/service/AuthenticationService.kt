@@ -4,52 +4,44 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.truta.proteus_android.domain.model.User
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class AuthenticationService : IAuthenticationService {
-    private val firebaseAuth: FirebaseAuth = Firebase.auth
-
-    override fun addAuthStateListener(listener: FirebaseAuth.AuthStateListener) {
-        firebaseAuth.addAuthStateListener(listener)
-    }
-
-    override fun removeAuthStateListener(listener: FirebaseAuth.AuthStateListener) {
-        firebaseAuth.removeAuthStateListener(listener)
-    }
-
-    override fun signUp(email: String, password: String, onComplete: (Boolean, String?) -> Unit) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    onComplete(true, null)
-                } else {
-                    onComplete(false, task.exception?.message)
+class AuthenticationService @Inject constructor(): IAuthenticationService {
+    override val currentUser: Flow<User?>
+        get() = callbackFlow {
+            val listener =
+                FirebaseAuth.AuthStateListener { auth ->
+                    this.trySend(auth.currentUser?.let { User(it.uid) })
                 }
-            }
-    }
-
-    override fun signIn(email: String, password: String, onComplete: (Boolean, String?) -> Unit) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    onComplete(true, null)
-                } else {
-                    onComplete(false, task.exception?.message)
-                }
-            }
-    }
-
-    override fun signOut() {
-        firebaseAuth.signOut()
-    }
-
-    override fun getCurrentUser(): FirebaseUser? {
-        return firebaseAuth.currentUser
-    }
-
-    override fun isUserSignedIn(onComplete: (Boolean) -> Unit) {
-        val authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            onComplete(firebaseAuth.currentUser != null)
+            Firebase.auth.addAuthStateListener(listener)
+            awaitClose { Firebase.auth.removeAuthStateListener(listener) }
         }
-        firebaseAuth.addAuthStateListener(authStateListener)
+
+    override val currentUserId: String
+        get() = Firebase.auth.currentUser?.uid.orEmpty()
+
+    override fun hasUser(): Boolean {
+        return Firebase.auth.currentUser != null
+    }
+
+    override suspend fun signIn(email: String, password: String) {
+        Firebase.auth.signInWithEmailAndPassword(email, password).await()
+    }
+
+    override suspend fun signUp(email: String, password: String) {
+        Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+    }
+
+    override suspend fun signOut() {
+        Firebase.auth.signOut()
+    }
+
+    override suspend fun deleteAccount() {
+        Firebase.auth.currentUser!!.delete().await()
     }
 }

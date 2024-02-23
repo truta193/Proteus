@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,15 +17,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import com.truta.proteus_android.R
 
 @Composable
 fun PasswordInputField(
-    labelValue: String, icon : ImageVector,
+    labelValue: String, icon: ImageVector,
     errorStatus: Boolean = false,
+    errorMessage: String = "",
     onTextSelected: (String) -> Unit
 ) {
 
@@ -61,9 +65,9 @@ fun PasswordInputField(
         trailingIcon = {
 
             val iconImage = if (passwordVisible.value) {
-                Icons.Filled.Info
+                R.drawable.ic_visibility_off
             } else {
-                Icons.Filled.Info
+                R.drawable.ic_visibility
             }
 
             val description = if (passwordVisible.value) {
@@ -73,11 +77,20 @@ fun PasswordInputField(
             }
 
             IconButton(onClick = { passwordVisible.value = !passwordVisible.value }) {
-                Icon(imageVector = iconImage, contentDescription = description)
+                Icon(painterResource(id = iconImage), contentDescription = description)
             }
 
         },
         visualTransformation = if (passwordVisible.value) VisualTransformation.None else PasswordVisualTransformation(),
-        isError = errorStatus
+        isError = errorStatus,
+        supportingText = {
+            if (errorStatus) {
+                Text(
+                    text = errorMessage,
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        }
     )
 }

@@ -3,44 +3,45 @@ package com.truta.proteus_android.domain
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
+import com.truta.proteus_android.AppViewModel
 import com.truta.proteus_android.domain.rules.RegistrationValidator
 import com.truta.proteus_android.domain.service.IAuthenticationService
-import com.truta.proteus_android.ui.RegistrationEvent
-import com.truta.proteus_android.ui.RegistrationState
+import com.truta.proteus_android.ui.SignUpEvent
+import com.truta.proteus_android.ui.SignUpState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModel @Inject constructor(
     private val authenticationService: IAuthenticationService
-) : ViewModel() {
-    var uiState = mutableStateOf(RegistrationState())
+) : AppViewModel() {
+    var uiState = mutableStateOf(SignUpState())
 
-    fun onEvent(event: RegistrationEvent) {
+    fun onEvent(event: SignUpEvent) {
         uiState.value = uiState.value.copy(
             initialState = false
         )
 
         when (event) {
-            is RegistrationEvent.EmailChanged -> {
+            is SignUpEvent.EmailChanged -> {
                 uiState.value = uiState.value.copy(
                     email = event.email
                 )
                 validateUi()
             }
-            is RegistrationEvent.PasswordChanged -> {
+            is SignUpEvent.PasswordChanged -> {
                 uiState.value = uiState.value.copy(
                     password = event.password
                 )
                 validateUi()
             }
-            is RegistrationEvent.ConfirmPasswordChanged -> {
+            is SignUpEvent.ConfirmPasswordChanged -> {
                 uiState.value = uiState.value.copy(
                     confirmPassword = event.confirmPassword
                 )
                 validateUi()
             }
-            is RegistrationEvent.RegisterButtonClicked -> {
+            is SignUpEvent.SignUpButtonClicked -> {
                 signUp()
             }
             else -> {
@@ -67,8 +68,8 @@ class RegistrationViewModel @Inject constructor(
                 uiState.value.confirmPassword
             )
         ) {
-            authenticationService.signUp(uiState.value.email, uiState.value.password) { _,str ->
-                Log.d("EVENT_TEST", "SIGN UP SUCCESS $str")
+            launchCatching {
+                authenticationService.signUp(uiState.value.email, uiState.value.password)
             }
         } else {
             Log.d("EVENT_TEST", "SIGN UP FAILED")

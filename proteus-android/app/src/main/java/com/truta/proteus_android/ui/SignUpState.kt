@@ -1,6 +1,6 @@
 package com.truta.proteus_android.ui
 
-data class RegistrationState(
+data class SignUpState(
     var email: String = "",
     var password: String = "",
     var confirmPassword: String = "",

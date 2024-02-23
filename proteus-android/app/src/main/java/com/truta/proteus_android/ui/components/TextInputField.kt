@@ -3,6 +3,7 @@ package com.truta.proteus_android.ui.components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +18,7 @@ import androidx.compose.ui.text.input.ImeAction
 fun InputField(
     labelValue: String, icon: ImageVector,
     errorStatus: Boolean = false,
+    errorMessage: String = "",
     onTextChanged: (String) -> Unit
 ) {
     val textValue = remember {
@@ -41,6 +43,15 @@ fun InputField(
         leadingIcon = {
             Icon(icon, "")
         },
-        isError = errorStatus
+        isError = errorStatus,
+        supportingText = {
+            if (errorStatus) {
+                Text(
+                    text = errorMessage,
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        }
     )
 }

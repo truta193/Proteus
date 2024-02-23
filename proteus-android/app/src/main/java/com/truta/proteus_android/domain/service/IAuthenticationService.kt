@@ -1,20 +1,15 @@
 package com.truta.proteus_android.domain.service
 
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.truta.proteus_android.domain.model.User
+import kotlinx.coroutines.flow.Flow
 
 interface IAuthenticationService {
-    fun addAuthStateListener(listener: FirebaseAuth.AuthStateListener)
+    val currentUser: Flow<User?>
+    val currentUserId: String
+    fun hasUser(): Boolean
+    suspend fun signIn(email: String, password: String)
+    suspend fun signUp(email: String, password: String)
+    suspend fun signOut()
+    suspend fun deleteAccount()
 
-    fun removeAuthStateListener(listener: FirebaseAuth.AuthStateListener)
-
-    fun signUp(email: String, password: String, onComplete: (Boolean, String?) -> Unit)
-
-    fun signIn(email: String, password: String, onComplete: (Boolean, String?) -> Unit)
-
-    fun signOut()
-
-    fun getCurrentUser(): FirebaseUser?
-
-    fun isUserSignedIn(onComplete: (Boolean) -> Unit)
 }
