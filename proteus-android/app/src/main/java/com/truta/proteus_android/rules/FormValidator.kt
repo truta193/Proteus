@@ -1,6 +1,6 @@
 package com.truta.proteus_android.rules
 
-object SignUpFormValidator {
+object FormValidator {
     fun validateEmail(email: String): Boolean {
         val emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}\$".toRegex()
         return emailRegex.matches(email)
@@ -19,5 +19,9 @@ object SignUpFormValidator {
 
     fun validateForm(email: String, password: String, confirmPassword: String): Boolean {
         return validateEmail(email) && validatePassword(password) && validateConfirmPassword(password, confirmPassword)
+    }
+
+    fun validateForm(email: String, password: String): Boolean {
+        return validateEmail(email) && validatePassword(password)
     }
 }

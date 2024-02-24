@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.truta.proteus_android.ui.screen.sign_in.SignInScreen
 import com.truta.proteus_android.ui.screen.sign_up.SignUpScreen
 import com.truta.proteus_android.ui.theme.ProteusAndroidTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,7 +21,7 @@ class ProteusActivity : ComponentActivity() {
 
         setContent {
             ProteusAndroidTheme {
-                SignUpScreen()
+                SignInScreen()
             }
         }
     }

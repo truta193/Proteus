@@ -1,7 +1,7 @@
 package com.truta.proteus_android.ui.screen.sign_up
 
 import android.util.Log
-import com.truta.proteus_android.rules.SignUpFormValidator
+import com.truta.proteus_android.rules.FormValidator
 import com.truta.proteus_android.service.AuthenticationService
 import com.truta.proteus_android.ui.screen.AppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,31 +23,28 @@ class SignUpViewModel @Inject constructor(
     fun updateEmail(newEmail: String) {
         email.value = newEmail
         validateUi()
-        Log.d("SignUpViewModel", "Email: ${email.value}" + " " + "Password: ${password.value}" + " " + "Confirm Password: ${confirmPassword.value}")
     }
 
     fun updatePassword(newPassword: String) {
         password.value = newPassword
         validateUi()
-        Log.d("SignUpViewModel", "Email: ${email.value}" + " " + "Password: ${password.value}" + " " + "Confirm Password: ${confirmPassword.value}")
     }
 
     fun updateConfirmPassword(newConfirmPassword: String) {
         confirmPassword.value = newConfirmPassword
         validateUi()
-        Log.d("SignUpViewModel", "Email: ${email.value}" + " " + "Password: ${password.value}" + " " + "Confirm Password: ${confirmPassword.value}")
     }
 
     fun validateUi() {
-        emailError.value = !SignUpFormValidator.validateEmail(email.value)
-        passwordError.value = !SignUpFormValidator.validatePassword(password.value)
-        confirmPasswordError.value = !SignUpFormValidator.validateConfirmPassword(password.value, confirmPassword.value)
+        emailError.value = !FormValidator.validateEmail(email.value)
+        passwordError.value = !FormValidator.validatePassword(password.value)
+        confirmPasswordError.value = !FormValidator.validateConfirmPassword(password.value, confirmPassword.value)
         signUpEnabled.value = !emailError.value && !passwordError.value && !confirmPasswordError.value
     }
 
     fun onSignUpClick(openAndPopUp: (String, String) -> Unit) {
         launchCatching {
-            if (!SignUpFormValidator.validateForm(email.value, password.value, confirmPassword.value)){
+            if (!FormValidator.validateForm(email.value, password.value, confirmPassword.value)){
                 Log.d("SignUpViewModel", "throwing exception")
                 throw Exception("Passwords do not match")
             }
