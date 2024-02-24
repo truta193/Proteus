@@ -4,7 +4,9 @@ import com.truta.proteus_android.rules.FormValidator
 import com.truta.proteus_android.service.AuthenticationService
 import com.truta.proteus_android.ui.screen.AppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -16,6 +18,9 @@ class SignInViewModel @Inject constructor(
     val emailError = MutableStateFlow(false)
     val passwordError = MutableStateFlow(false)
     val signInEnabled = MutableStateFlow(false)
+
+    val _toastMessage = MutableSharedFlow<String>()
+    val toastMessage = _toastMessage.asSharedFlow()
 
     fun updateEmail(newEmail: String) {
         email.value = newEmail
@@ -34,13 +39,22 @@ class SignInViewModel @Inject constructor(
     }
 
     fun onSignInClick(openAndPopUp: (String, String) -> Unit) {
-        launchCatching {
-            if (!FormValidator.validateForm(email.value, password.value)){
-                throw Exception("Invalid email or password")
-            }
+        launchCatching (
+            block = {
+                if (!FormValidator.validateForm(email.value, password.value)){
+                    throw Exception("Invalid email or password")
+                }
 
-            authenticationService.signIn(email.value, password.value)
-            //openAndPopUp("notes_list_screen", "sign_up_screen")
-        }
+                authenticationService.signIn(email.value, password.value)
+                //openAndPopUp("notes_list_screen", "sign_up_screen")
+            },
+            onError = { sendToastMessage(it.message!!) }
+        )
+    }
+
+    fun sendToastMessage(message: String) {
+        launchCatching (
+            block = { _toastMessage.emit(message) }
+        )
     }
 }

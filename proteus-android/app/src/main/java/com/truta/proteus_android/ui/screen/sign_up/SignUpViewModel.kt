@@ -43,14 +43,21 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun onSignUpClick(openAndPopUp: (String, String) -> Unit) {
-        launchCatching {
-            if (!FormValidator.validateForm(email.value, password.value, confirmPassword.value)){
-                Log.d("SignUpViewModel", "throwing exception")
-                throw Exception("Passwords do not match")
-            }
+        launchCatching (
+            block = {
+                if (!FormValidator.validateForm(
+                        email.value,
+                        password.value,
+                        confirmPassword.value
+                    )
+                ) {
+                    Log.d("SignUpViewModel", "throwing exception")
+                    throw Exception("Passwords do not match")
+                }
 
-            authenticationService.signUp(email.value, password.value)
-            //openAndPopUp(NOTES_LIST_SCREEN, SIGN_UP_SCREEN)
-        }
+                authenticationService.signUp(email.value, password.value)
+                //openAndPopUp(NOTES_LIST_SCREEN, SIGN_UP_SCREEN)
+            }
+        )
     }
 }

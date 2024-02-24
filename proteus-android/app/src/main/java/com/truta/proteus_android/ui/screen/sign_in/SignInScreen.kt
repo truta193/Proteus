@@ -1,5 +1,6 @@
 package com.truta.proteus_android.ui.screen.sign_in
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,24 +20,38 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.truta.proteus_android.ui.component.PasswordInputField
 import com.truta.proteus_android.ui.component.TextInputField
-import com.truta.proteus_android.ui.screen.sign_up.SignUpViewModel
 
 @Composable
 fun SignInScreen(
     modifier: Modifier = Modifier,
     viewModel: SignInViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
     val emailError = viewModel.emailError.collectAsState()
     val passwordError = viewModel.passwordError.collectAsState()
     val signUpEnabled = viewModel.signInEnabled.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel
+            .toastMessage
+            .collect { message ->
+                Toast.makeText(
+                    context,
+                    message,
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+    }
 
     Surface(
         modifier = modifier
@@ -59,7 +74,7 @@ fun SignInScreen(
                     imeAction = ImeAction.Next
                 ),
                 onTextChanged = { viewModel.updateEmail(it) },
-                errorStatus =  emailError.value,
+                errorStatus = emailError.value,
                 errorMessage = "Email must be valid (e.g. name@domain.com)"
             )
 
@@ -82,7 +97,7 @@ fun SignInScreen(
                     .padding(top = 16.dp)
                     .height(48.dp),
                 enabled = signUpEnabled.value,
-                onClick = { viewModel.onSignInClick({_,_ ->}) }
+                onClick = { viewModel.onSignInClick({ _, _ -> }) }
             ) {
                 Text(text = "Sign In")
             }
