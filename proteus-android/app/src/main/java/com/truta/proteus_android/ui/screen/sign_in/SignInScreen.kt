@@ -17,17 +17,21 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.truta.proteus_android.Routes
 import com.truta.proteus_android.ui.component.PasswordInputField
 import com.truta.proteus_android.ui.component.TextInputField
 
@@ -65,7 +69,8 @@ fun SignInScreen(
                 .verticalScroll(rememberScrollState())
                 .statusBarsPadding()
                 .safeDrawingPadding()
-                .padding(32.dp)
+                .padding(32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TextInputField(
                 labelValue = "Email",
@@ -101,6 +106,16 @@ fun SignInScreen(
                 onClick = { viewModel.onSignInClick({ _, _ -> }) }
             ) {
                 Text(text = "Sign In")
+            }
+
+            TextButton(
+                onClick = { openAndPopUp(Routes.SignUpScreen.route, Routes.SignInScreen.route)},
+                modifier = Modifier.padding(top = 16.dp)
+            ) {
+                Text(
+                    text = "Don't have an account? Sign Up!",
+                    color = MaterialTheme.colorScheme.onBackground
+                )
             }
         }
     }
