@@ -1,5 +1,6 @@
 package com.truta.proteus_android.ui.screen.sign_in
 
+import com.truta.proteus_android.Routes
 import com.truta.proteus_android.rules.FormValidator
 import com.truta.proteus_android.service.AuthenticationService
 import com.truta.proteus_android.ui.screen.AppViewModel
@@ -46,7 +47,7 @@ class SignInViewModel @Inject constructor(
                 }
 
                 authenticationService.signIn(email.value, password.value)
-                //openAndPopUp("notes_list_screen", "sign_up_screen")
+                openAndPopUp(Routes.ScheduleScreen.route, Routes.SignInScreen.route)
             },
             onError = { sendToastMessage(it.message!!) }
         )

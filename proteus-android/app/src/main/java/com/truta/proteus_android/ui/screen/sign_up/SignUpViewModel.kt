@@ -1,6 +1,7 @@
 package com.truta.proteus_android.ui.screen.sign_up
 
 import android.util.Log
+import com.truta.proteus_android.Routes
 import com.truta.proteus_android.rules.FormValidator
 import com.truta.proteus_android.service.AuthenticationService
 import com.truta.proteus_android.ui.screen.AppViewModel
@@ -56,7 +57,8 @@ class SignUpViewModel @Inject constructor(
                 }
 
                 authenticationService.signUp(email.value, password.value)
-                //openAndPopUp(NOTES_LIST_SCREEN, SIGN_UP_SCREEN)
+                openAndPopUp(Routes.ScheduleScreen.route, Routes.SignUpScreen.route)
+
             }
         )
     }

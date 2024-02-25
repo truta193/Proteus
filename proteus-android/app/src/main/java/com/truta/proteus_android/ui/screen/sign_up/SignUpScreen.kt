@@ -106,7 +106,7 @@ fun SignUpScreen(
                     .padding(top = 16.dp)
                     .height(48.dp),
                 enabled = signUpEnabled.value,
-                onClick = { viewModel.onSignUpClick({ _, _ -> }) }
+                onClick = { viewModel.onSignUpClick(openAndPopUp) }
             ) {
                 Text(text = "Sign Up")
             }
