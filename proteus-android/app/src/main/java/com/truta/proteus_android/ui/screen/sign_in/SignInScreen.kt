@@ -34,6 +34,7 @@ import com.truta.proteus_android.ui.component.TextInputField
 @Composable
 fun SignInScreen(
     modifier: Modifier = Modifier,
+    openAndPopUp: (String, String) -> Unit,
     viewModel: SignInViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current

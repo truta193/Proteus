@@ -34,6 +34,7 @@ import com.truta.proteus_android.ui.component.PasswordInputField
 @Composable
 fun SignUpScreen(
     modifier: Modifier = Modifier,
+    openAndPopUp: (String, String) -> Unit,
     viewModel: SignUpViewModel = hiltViewModel()
 ) {
     val email = viewModel.email.collectAsState()
