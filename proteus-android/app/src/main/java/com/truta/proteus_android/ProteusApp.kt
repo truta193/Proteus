@@ -29,7 +29,8 @@ fun ProteusApp() {
             Scaffold {innerPaddingModifier ->
                 NavHost(
                     navController = appState.navController,
-                    startDestination = Routes.SignInScreen.route,
+                    //startDestination = Routes.SignInScreen.route,
+                    startDestination = Routes.ScheduleScreen.route,
                     modifier = Modifier.padding(innerPaddingModifier)
                 ) {
                     routeGraph(appState)

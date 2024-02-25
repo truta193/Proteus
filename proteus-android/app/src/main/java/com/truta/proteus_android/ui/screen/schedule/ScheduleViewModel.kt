@@ -12,5 +12,5 @@ class ScheduleViewModel @Inject constructor(
     private val authenticationService: AuthenticationService,
     private val scheduleRepository: ScheduleRepository
 ): AppViewModel() {
-
+    val schedules = scheduleRepository.schedules
 }

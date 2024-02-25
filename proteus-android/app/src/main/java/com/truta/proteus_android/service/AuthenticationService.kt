@@ -3,7 +3,7 @@ package com.truta.proteus_android.service
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.truta.proteus_android.model.User
+import com.truta.proteus_android.model.UserModel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -11,11 +11,11 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class AuthenticationService @Inject constructor(): IAuthenticationService {
-    override val currentUser: Flow<User?>
+    override val currentUser: Flow<UserModel?>
         get() = callbackFlow {
             val listener =
                 FirebaseAuth.AuthStateListener { auth ->
-                    this.trySend(auth.currentUser?.let { User(it.uid) })
+                    this.trySend(auth.currentUser?.let { UserModel(it.uid) })
                 }
             Firebase.auth.addAuthStateListener(listener)
             awaitClose { Firebase.auth.removeAuthStateListener(listener) }
