@@ -38,35 +38,53 @@ fun ScheduleScreen(
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val tasks = viewModel.schedules[0].tasks
-    val hourHeight = 64.dp
-    val dayWidth = 64.dp
+
     val numDays = 7
+    val startHour = LocalTime.of(7, 0)
+    val endHour = LocalTime.of(22, 0)
+
     var sidebarWidth by remember { mutableIntStateOf(0) }
+    var headerHeight by remember { mutableIntStateOf(0) }
+    var totalWidth by remember { mutableIntStateOf(0) }
+    var totalHeight by remember { mutableIntStateOf(0) }
+
     val verticalScrollState = rememberScrollState()
     val horizontalScrollState = rememberScrollState()
 
     Column(
         modifier = modifier
+            .onGloballyPositioned {
+                totalWidth = it.size.width
+                totalHeight = it.size.height
+            }
     ) {
+        val trueDayWidth = with (LocalDensity.current) { (totalWidth.toDp() - sidebarWidth.toDp()) / numDays }
+        val trueHourHeight = with (LocalDensity.current) { (totalHeight.toDp() - headerHeight.toDp()) / (endHour.hour - startHour.hour)}
+
         ScheduleHeader(
-            dayWidth = dayWidth,
+            dayWidth = trueDayWidth,
             numDays = numDays,
             modifier = Modifier
                 .padding(start = with(LocalDensity.current) { sidebarWidth.toDp() })
                 .horizontalScroll(horizontalScrollState)
+                .onGloballyPositioned { headerHeight = it.size.height }
         )
         Row(modifier = Modifier.weight(1f)) {
             ScheduleSidebar(
-                hourHeight = hourHeight,
+                hourHeight = trueHourHeight,
+                startTime = startHour,
+                endTime = endHour,
                 modifier = Modifier
                     .verticalScroll(verticalScrollState)
                     .onGloballyPositioned { sidebarWidth = it.size.width }
             )
             Schedule(
                 tasks = tasks,
-                dayWidth = dayWidth,
-                hourHeight = hourHeight,
+                dayWidth = trueDayWidth,
+                hourHeight = trueHourHeight,
                 numDays = numDays,
+                startTime = startHour,
+                endTime = endHour,
                 modifier = Modifier
                     .weight(1f)
                     .verticalScroll(verticalScrollState)

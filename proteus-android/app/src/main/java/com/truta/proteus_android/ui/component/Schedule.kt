@@ -3,6 +3,10 @@ package com.truta.proteus_android.ui.component
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -10,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.layout.ParentDataModifier
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -24,9 +29,13 @@ fun Schedule(
     tasks: List<TaskModel>,
     dayWidth: Dp,
     hourHeight: Dp,
+    startTime: LocalTime,
+    endTime: LocalTime,
     numDays: Int,
 ) {
-    val dividerColor = if (MaterialTheme.colorScheme.background.luminance() > 0.5 ) Color.LightGray else Color.DarkGray
+    val dividerColor =
+        if (MaterialTheme.colorScheme.background.luminance() > 0.5) Color.LightGray else Color.DarkGray
+
     Layout(
         content = {
             tasks.sortedBy(TaskModel::startTime).forEach { task ->
@@ -37,7 +46,7 @@ fun Schedule(
         },
         modifier = modifier
             .drawBehind {
-                repeat(23) {
+                repeat(endTime.hour - startTime.hour) {
                     drawLine(
                         dividerColor,
                         start = Offset(0f, (it + 1) * hourHeight.toPx()),
@@ -55,18 +64,26 @@ fun Schedule(
                 }
             }
     ) { measureables, constraints ->
-        val height = hourHeight.roundToPx() * 24
+        val height = hourHeight.roundToPx() * (endTime.hour - startTime.hour)
         val width = dayWidth.roundToPx() * numDays
         val placeablesWithTasks = measureables.map { measurable ->
             val task = measurable.parentData as TaskModel
             val taskDurationMinutes = ChronoUnit.MINUTES.between(task.startTime, task.endTime)
             val taskHeight = ((taskDurationMinutes / 60f) * hourHeight.toPx()).roundToInt()
-            val placeable = measurable.measure(constraints.copy(minWidth = dayWidth.roundToPx(), maxWidth = dayWidth.roundToPx(), minHeight = taskHeight, maxHeight = taskHeight))
+            val placeable = measurable.measure(
+                constraints.copy(
+                    minWidth = dayWidth.roundToPx(),
+                    maxWidth = dayWidth.roundToPx(),
+                    minHeight = taskHeight,
+                    maxHeight = taskHeight
+                )
+            )
             Pair(placeable, task)
         }
         layout(width, height) {
             placeablesWithTasks.forEach { (placeable, task) ->
-                val eventOffsetMinutes = ChronoUnit.MINUTES.between(LocalTime.MIN, task.startTime.toLocalTime())
+                val eventOffsetMinutes =
+                    ChronoUnit.MINUTES.between(startTime, task.startTime.toLocalTime())
                 val eventY = ((eventOffsetMinutes / 60f) * hourHeight.toPx()).roundToInt()
                 val eventX = task.day * dayWidth.roundToPx()
                 placeable.place(eventX, eventY)
