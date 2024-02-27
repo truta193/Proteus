@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Proteus-Android"
+rootProject.name = "ProteusAndroid"
 include(":app")
  
