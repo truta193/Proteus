@@ -1,5 +1,6 @@
 package com.truta.proteus_android.ui.screen.schedule
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -61,14 +63,20 @@ fun ScheduleScreen(
         val trueDayWidth = with (LocalDensity.current) { (totalWidth.toDp() - sidebarWidth.toDp()) / numDays }
         val trueHourHeight = with (LocalDensity.current) { (totalHeight.toDp() - headerHeight.toDp()) / (endHour.hour - startHour.hour)}
 
-        ScheduleHeader(
-            dayWidth = trueDayWidth,
-            numDays = numDays,
+        Box(
             modifier = Modifier
-                .padding(start = with(LocalDensity.current) { sidebarWidth.toDp() })
-                .horizontalScroll(horizontalScrollState)
                 .onGloballyPositioned { headerHeight = it.size.height }
-        )
+                .horizontalScroll(horizontalScrollState)
+                .background(color = MaterialTheme.colorScheme.secondaryContainer)
+        ) {
+            ScheduleHeader(
+                dayWidth = trueDayWidth,
+                numDays = numDays,
+                modifier = Modifier
+                    .padding(start = with(LocalDensity.current) { sidebarWidth.toDp() })
+            )
+        }
+
         Row(modifier = Modifier.weight(1f)) {
             ScheduleSidebar(
                 hourHeight = trueHourHeight,
