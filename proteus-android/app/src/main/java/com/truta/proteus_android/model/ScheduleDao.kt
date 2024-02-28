@@ -1,8 +1,8 @@
 package com.truta.proteus_android.model
 
-data class ScheduleModel(
+data class ScheduleDao (
     val id: String = "",
     val title: String = "",
-    val tasks: List<TaskModel> = emptyList(),
+    val tasks: List<TaskDao> = emptyList(),
     val userId: String = ""
 )

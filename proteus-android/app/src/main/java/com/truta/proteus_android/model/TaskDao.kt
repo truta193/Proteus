@@ -1,17 +1,17 @@
 package com.truta.proteus_android.model
 
-import androidx.compose.ui.graphics.Color
 import java.time.LocalDateTime
 
-data class TaskModel(
+data class TaskDao(
     val id: String = "",
     val title: String = "",
-    val color: Color = Color.White,
+    val color: ULong = 0uL,
     val abbreviation: String = "",
-    val startTime: LocalDateTime = LocalDateTime.now(),
-    val endTime: LocalDateTime = LocalDateTime.now(),
+    val startTime: String = "",
+    val endTime: String = "",
     val day: Int = 0,
     val location: String = "",
     val week: Int = 0
 ) {
+    constructor() : this("", "", 0uL, "", "", "", 0, "", 0)
 }
