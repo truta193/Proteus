@@ -52,17 +52,17 @@ class ProteusActivity : ComponentActivity() {
 //            "Location 2",
 //            1
 //        )
-//        val s = ScheduleModel("1", "Schedule 1", listOf(t1, t2), "testUser")
+//        val s = ScheduleModel("1", "Schedule 1", listOf(t1, t2), "testUser", true)
 //        val mappingService = MappingService()
-//        //db.collection("schedules").add(mappingService.scheduleModelToDao(s))
+//        db.collection("schedules").add(mappingService.scheduleModelToDao(s))
 
-        val mappingService = MappingService()
-        val storageService = StorageService(mappingService)
+        //val mappingService = MappingService()
+        //val storageService = StorageService(mappingService)
 
-        lifecycleScope.launch {
-            val ns = storageService.getSchedule("BSuKGq3BElpoUUGIDwEn")
-            Log.d("ProteusActivity", ns.toString())
-        }
+//        lifecycleScope.launch {
+//            val ns = storageService.getSchedule("BSuKGq3BElpoUUGIDwEn")
+//            Log.d("ProteusActivity", ns.toString())
+//        }
 
         setContent {
             ProteusAndroidTheme {

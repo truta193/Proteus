@@ -1,6 +1,9 @@
 package com.truta.proteus_android.di
 
 import com.truta.proteus_android.repository.ScheduleRepository
+import com.truta.proteus_android.service.AuthenticationService
+import com.truta.proteus_android.service.MappingService
+import com.truta.proteus_android.service.StorageService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +15,10 @@ import javax.inject.Singleton
 object RepositoryModule {
     @Provides
     @Singleton
-     fun provideScheduleRepository(): ScheduleRepository {
-        return ScheduleRepository()
+     fun provideScheduleRepository(
+        authService: AuthenticationService,
+        mappingService: MappingService
+     ): ScheduleRepository {
+        return ScheduleRepository(authService, mappingService)
      }
 }

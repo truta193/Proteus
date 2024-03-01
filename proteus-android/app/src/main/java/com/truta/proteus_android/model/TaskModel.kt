@@ -14,4 +14,5 @@ data class TaskModel(
     val location: String = "",
     val week: Int = 0
 ) {
+    constructor() : this("", "", Color.White, "", LocalDateTime.now(), LocalDateTime.now(), 0, "", 0)
 }

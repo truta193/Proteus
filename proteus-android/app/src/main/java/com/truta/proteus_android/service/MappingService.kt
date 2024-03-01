@@ -7,8 +7,9 @@ import com.truta.proteus_android.model.TaskDao
 import com.truta.proteus_android.model.TaskModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class MappingService : IMappingService {
+class MappingService @Inject constructor(): IMappingService {
     private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
     override fun taskModelToDao(taskModel: TaskModel): TaskDao {
 
@@ -45,7 +46,8 @@ class MappingService : IMappingService {
             id = scheduleModel.id,
             title = scheduleModel.title,
             tasks = scheduleModel.tasks.map { taskModelToDao(it) },
-            userId = scheduleModel.userId
+            userId = scheduleModel.userId,
+            isCurrent = scheduleModel.isCurrent
         )
     }
 
@@ -54,7 +56,8 @@ class MappingService : IMappingService {
             id = scheduleDao.id,
             title = scheduleDao.title,
             tasks = scheduleDao.tasks.map { taskDaoToModel(it) },
-            userId = scheduleDao.userId
+            userId = scheduleDao.userId,
+            isCurrent = scheduleDao.isCurrent
         )
     }
 }

@@ -1,24 +1,42 @@
 package com.truta.proteus_android.repository
 
+import android.util.Log
 import androidx.compose.ui.graphics.Color
+import com.google.firebase.firestore.dataObjects
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.truta.proteus_android.model.ScheduleDao
 import com.truta.proteus_android.model.ScheduleModel
 import com.truta.proteus_android.model.TaskModel
+import com.truta.proteus_android.service.AuthenticationService
+import com.truta.proteus_android.service.MappingService
+import com.truta.proteus_android.service.StorageService
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime
+import javax.inject.Inject
 
 
-class ScheduleRepository {
-    //TODO: Make sure it's a flow
-//    public val schedules: List<ScheduleModel> = listOf(
-//        ScheduleModel(
-//            "1",
-//            "Schedule 1",
-//            listOf(
-//                TaskModel("1", "Task 1", Color.Red, "T1", LocalDateTime.parse("2021-05-18T13:00:00"), LocalDateTime.parse("2021-05-18T14:00:00"), 1, "Location 1", 1),
-//                TaskModel("2", "Task 2", Color.Blue, "T2", LocalDateTime.parse("2021-05-18T15:00:00"), LocalDateTime.parse("2021-05-18T16:35:00"), 2, "Location 2", 1),
-//                TaskModel("3", "Task 3", Color.Green, "T3", LocalDateTime.parse("2021-05-18T17:00:00"), LocalDateTime.parse("2021-05-18T19:00:00"), 1, "Location 3", 1),
-//            ),
-//            "1"
-//        )
-//    )
-    public val schedules: List<ScheduleModel> = emptyList()
+class ScheduleRepository @Inject constructor(
+    private val authenticationService: AuthenticationService,
+    private val mappingService: MappingService
+) {
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val schedules: Flow<List<ScheduleModel>>
+        get() =
+            authenticationService.currentUser.flatMapLatest { user ->
+                Log.d("ScheduleRepository", "Getting schedules for user: ${user?.id}")
+                Firebase.firestore
+                    .collection(StorageService.SCHEDULES_COLLECTION)
+                    .whereEqualTo(StorageService.USER_ID_FIELD, user?.id)
+                    .dataObjects<ScheduleDao>()
+                    .map { scheduleDaoList ->
+                        Log.d("ScheduleRepository", "Got schedules: ${scheduleDaoList.size}, $scheduleDaoList")
+                        scheduleDaoList.map { mappingService.scheduleDaoToModel(it) }
+                    }
+            }
 }

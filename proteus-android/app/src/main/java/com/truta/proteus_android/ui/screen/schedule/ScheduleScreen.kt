@@ -1,5 +1,6 @@
 package com.truta.proteus_android.ui.screen.schedule
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
@@ -11,6 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -30,6 +32,7 @@ import com.truta.proteus_android.ui.component.Schedule
 import com.truta.proteus_android.ui.component.ScheduleHeader
 import com.truta.proteus_android.ui.component.ScheduleSidebar
 import com.truta.proteus_android.ui.component.Task
+import kotlinx.coroutines.flow.collect
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 import kotlin.math.roundToInt
@@ -40,9 +43,6 @@ fun ScheduleScreen(
     openAndPopUp: (String, String) -> Unit,
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
-    //TODO make sure to have a flow in repo
-    val tasks = viewModel.schedules.firstOrNull()?.tasks ?: emptyList()
-
     val numDays = 7
     val startHour = LocalTime.of(7, 0)
     val endHour = LocalTime.of(22, 0)
@@ -55,6 +55,10 @@ fun ScheduleScreen(
     val verticalScrollState = rememberScrollState()
     val horizontalScrollState = rememberScrollState()
 
+    val schedules = viewModel.schedules.collectAsState(initial = emptyList())
+
+    val currentSchedule = viewModel.currentSchedule.collectAsState(initial = null)
+
     Column(
         modifier = modifier
             .onGloballyPositioned {
@@ -65,7 +69,7 @@ fun ScheduleScreen(
         val trueDayWidth = with (LocalDensity.current) { (totalWidth.toDp() - sidebarWidth.toDp()) / numDays }
         val trueHourHeight = with (LocalDensity.current) { (totalHeight.toDp() - headerHeight.toDp()) / (endHour.hour - startHour.hour)}
 
-        if (viewModel.schedules.isEmpty()) {
+        if (schedules.value.isEmpty()) {
             Text("No schedules found")
         } else {
             Box(
@@ -92,7 +96,7 @@ fun ScheduleScreen(
                         .onGloballyPositioned { sidebarWidth = it.size.width }
                 )
                 Schedule(
-                    tasks = tasks,
+                    tasks = currentSchedule.value?.tasks ?: emptyList(),
                     dayWidth = trueDayWidth,
                     hourHeight = trueHourHeight,
                     numDays = numDays,

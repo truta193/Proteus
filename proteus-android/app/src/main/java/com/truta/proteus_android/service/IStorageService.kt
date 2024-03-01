@@ -10,5 +10,9 @@ interface IStorageService {
 
     suspend fun addSchedule(schedule: ScheduleModel)
     suspend fun getSchedule(id: String): ScheduleModel?
-    suspend fun getScheduleByUserId(userId: String): List<ScheduleModel>
+    suspend fun updateSchedule(schedule: ScheduleModel)
+
+    //Probs unnecessary
+    suspend fun updateScheduleTasks(schedule: ScheduleModel)
+    suspend fun deleteSchedule(id: String)
 }
