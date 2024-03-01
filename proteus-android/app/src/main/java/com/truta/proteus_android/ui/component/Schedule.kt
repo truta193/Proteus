@@ -23,6 +23,7 @@ import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 import kotlin.math.roundToInt
 
+//TODO: Check if tasks fits between begin and end time
 @Composable
 fun Schedule(
     modifier: Modifier = Modifier,

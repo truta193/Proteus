@@ -10,8 +10,7 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class StorageService @Inject constructor(
-    private val mappingService: MappingService,
-    private val authenticationService: AuthenticationService
+    private val mappingService: MappingService
 ) : IStorageService {
     override val database: FirebaseFirestore = Firebase.firestore
 

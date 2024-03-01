@@ -6,10 +6,7 @@ import com.truta.proteus_android.repository.ScheduleRepository
 import com.truta.proteus_android.service.AuthenticationService
 import com.truta.proteus_android.ui.screen.AppViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
