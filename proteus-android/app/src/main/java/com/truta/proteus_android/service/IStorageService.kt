@@ -9,4 +9,6 @@ interface IStorageService {
     val database: FirebaseFirestore
 
     suspend fun addSchedule(schedule: ScheduleModel)
+    suspend fun getSchedule(id: String): ScheduleModel?
+    suspend fun getScheduleByUserId(userId: String): List<ScheduleModel>
 }

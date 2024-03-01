@@ -1,5 +1,6 @@
-package com.truta.proteus_android.repository
+package com.truta.proteus_android.di
 
+import com.truta.proteus_android.repository.ScheduleRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

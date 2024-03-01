@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -39,7 +40,8 @@ fun ScheduleScreen(
     openAndPopUp: (String, String) -> Unit,
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
-    val tasks = viewModel.schedules[0].tasks
+    //TODO make sure to have a flow in repo
+    val tasks = viewModel.schedules.firstOrNull()?.tasks ?: emptyList()
 
     val numDays = 7
     val startHour = LocalTime.of(7, 0)
@@ -63,41 +65,45 @@ fun ScheduleScreen(
         val trueDayWidth = with (LocalDensity.current) { (totalWidth.toDp() - sidebarWidth.toDp()) / numDays }
         val trueHourHeight = with (LocalDensity.current) { (totalHeight.toDp() - headerHeight.toDp()) / (endHour.hour - startHour.hour)}
 
-        Box(
-            modifier = Modifier
-                .onGloballyPositioned { headerHeight = it.size.height }
-                .horizontalScroll(horizontalScrollState)
-                .background(color = MaterialTheme.colorScheme.secondaryContainer)
-        ) {
-            ScheduleHeader(
-                dayWidth = trueDayWidth,
-                numDays = numDays,
+        if (viewModel.schedules.isEmpty()) {
+            Text("No schedules found")
+        } else {
+            Box(
                 modifier = Modifier
-                    .padding(start = with(LocalDensity.current) { sidebarWidth.toDp() })
-            )
-        }
-
-        Row(modifier = Modifier.weight(1f)) {
-            ScheduleSidebar(
-                hourHeight = trueHourHeight,
-                startTime = startHour,
-                endTime = endHour,
-                modifier = Modifier
-                    .verticalScroll(verticalScrollState)
-                    .onGloballyPositioned { sidebarWidth = it.size.width }
-            )
-            Schedule(
-                tasks = tasks,
-                dayWidth = trueDayWidth,
-                hourHeight = trueHourHeight,
-                numDays = numDays,
-                startTime = startHour,
-                endTime = endHour,
-                modifier = Modifier
-                    .weight(1f)
-                    .verticalScroll(verticalScrollState)
+                    .onGloballyPositioned { headerHeight = it.size.height }
                     .horizontalScroll(horizontalScrollState)
-            )
+                    .background(color = MaterialTheme.colorScheme.secondaryContainer)
+            ) {
+                ScheduleHeader(
+                    dayWidth = trueDayWidth,
+                    numDays = numDays,
+                    modifier = Modifier
+                        .padding(start = with(LocalDensity.current) { sidebarWidth.toDp() })
+                )
+            }
+
+            Row(modifier = Modifier.weight(1f)) {
+                ScheduleSidebar(
+                    hourHeight = trueHourHeight,
+                    startTime = startHour,
+                    endTime = endHour,
+                    modifier = Modifier
+                        .verticalScroll(verticalScrollState)
+                        .onGloballyPositioned { sidebarWidth = it.size.width }
+                )
+                Schedule(
+                    tasks = tasks,
+                    dayWidth = trueDayWidth,
+                    hourHeight = trueHourHeight,
+                    numDays = numDays,
+                    startTime = startHour,
+                    endTime = endHour,
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScroll(verticalScrollState)
+                        .horizontalScroll(horizontalScrollState)
+                )
+            }
         }
     }
 }
