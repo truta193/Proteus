@@ -2,7 +2,6 @@ package com.truta.proteus_android.model
 
 import androidx.compose.ui.graphics.Color
 import com.google.firebase.firestore.PropertyName
-import java.time.LocalDateTime
 
 data class TaskDao(
     val id: String = "",

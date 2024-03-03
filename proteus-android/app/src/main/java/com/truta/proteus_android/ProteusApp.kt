@@ -1,13 +1,10 @@
 package com.truta.proteus_android
 
 import ProteusAppState
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -26,15 +23,13 @@ fun ProteusApp() {
         ) {
             val appState = rememberAppState()
 
-
-                NavHost(
-                    navController = appState.navController,
-                    startDestination = Routes.SignInScreen.route,
-                    //startDestination = Routes.ScheduleScreen.route,
-                ) {
-                    routeGraph(appState)
-                }
-
+            NavHost(
+                navController = appState.navController,
+                startDestination = Routes.SignInScreen.route,
+                //startDestination = Routes.ScheduleScreen.route,
+            ) {
+                routeGraph(appState)
+            }
         }
     }
 }
