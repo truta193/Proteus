@@ -58,4 +58,8 @@ class SignInViewModel @Inject constructor(
             block = { _toastMessage.emit(message) }
         )
     }
+
+    fun opAppStart(openAndPopUp: (String, String) -> Unit) {
+        if (authenticationService.hasUser()) openAndPopUp(Routes.ScheduleScreen.route, Routes.SignInScreen.route)
+    }
 }

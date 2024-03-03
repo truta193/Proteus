@@ -47,6 +47,10 @@ fun SignInScreen(
     val signUpEnabled = viewModel.signInEnabled.collectAsState()
 
     LaunchedEffect(Unit) {
+        viewModel.opAppStart(openAndPopUp)
+    }
+
+    LaunchedEffect(Unit) {
         viewModel
             .toastMessage
             .collect { message ->
