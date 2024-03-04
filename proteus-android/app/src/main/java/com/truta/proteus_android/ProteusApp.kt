@@ -1,10 +1,11 @@
 package com.truta.proteus_android
 
 import ProteusAppState
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -19,7 +20,7 @@ import com.truta.proteus_android.ui.theme.ProteusAndroidTheme
 fun ProteusApp() {
     ProteusAndroidTheme {
         Surface(
-            color = MaterialTheme.colorScheme.background
+            modifier = Modifier.fillMaxSize()
         ) {
             val appState = rememberAppState()
 

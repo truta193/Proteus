@@ -1,19 +1,21 @@
 package com.truta.proteus_android.ui.screen.schedule
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -27,11 +29,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.truta.proteus_android.ui.component.Schedule
 import com.truta.proteus_android.ui.component.ScheduleHeader
 import com.truta.proteus_android.ui.component.ScheduleSidebar
-import java.time.LocalDateTime
 import java.time.LocalTime
-import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class)
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ScheduleScreen(
     modifier: Modifier = Modifier,
@@ -60,22 +61,8 @@ fun ScheduleScreen(
                 totalWidth = it.size.width
                 totalHeight = it.size.height
             },
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = LocalDateTime.now().month.toString()
-                        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() },
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                    actionIconContentColor = MaterialTheme.colorScheme.onSecondary
-                )
-
-            )
+        bottomBar = {
+            BottomAppBar(actions = {})
         }
     ) { paddingValues ->
         Column(
@@ -84,7 +71,6 @@ fun ScheduleScreen(
                     totalWidth = it.size.width
                     totalHeight = it.size.height
                 }
-                .padding(paddingValues)
         ) {
             val trueDayWidth =
                 with(LocalDensity.current) { (totalWidth.toDp() - sidebarWidth.toDp()) / numDays }
@@ -99,6 +85,7 @@ fun ScheduleScreen(
                         .onGloballyPositioned { headerHeight = it.size.height }
                         .horizontalScroll(horizontalScrollState)
                         .background(color = MaterialTheme.colorScheme.primary)
+                        .statusBarsPadding()
                 ) {
                     ScheduleHeader(
                         dayWidth = trueDayWidth,
@@ -108,7 +95,11 @@ fun ScheduleScreen(
                     )
                 }
 
-                Row(modifier = Modifier.weight(1f)) {
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(bottom = paddingValues.calculateBottomPadding())
+                ) {
                     ScheduleSidebar(
                         hourHeight = trueHourHeight,
                         startTime = startHour,

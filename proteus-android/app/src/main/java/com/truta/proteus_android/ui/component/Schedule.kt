@@ -32,6 +32,8 @@ fun Schedule(
     val dividerColor =
         if (MaterialTheme.colorScheme.background.luminance() > 0.5) Color.LightGray else Color.DarkGray
 
+    //val validTasks = tasks.filter { t -> t.startTime.toLocalTime() >= startTime && t.endTime.toLocalTime() <= endTime }
+
     Layout(
         content = {
             tasks.sortedBy(TaskModel::startTime).forEach { task ->
@@ -59,10 +61,10 @@ fun Schedule(
                     )
                 }
             }
-    ) { measureables, constraints ->
+    ) { measurables, constraints ->
         val height = hourHeight.roundToPx() * (endTime.hour - startTime.hour)
         val width = dayWidth.roundToPx() * numDays
-        val placeablesWithTasks = measureables.map { measurable ->
+        val placeablesWithTasks = measurables.map { measurable ->
             val task = measurable.parentData as TaskModel
             val taskDurationMinutes = ChronoUnit.MINUTES.between(task.startTime, task.endTime)
             val taskHeight = ((taskDurationMinutes / 60f) * hourHeight.toPx()).roundToInt()
