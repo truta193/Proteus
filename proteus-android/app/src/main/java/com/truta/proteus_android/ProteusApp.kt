@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.truta.proteus_android.ui.screen.new_task.NewTaskScreen
 import com.truta.proteus_android.ui.screen.schedule.ScheduleScreen
 import com.truta.proteus_android.ui.screen.sign_in.SignInScreen
 import com.truta.proteus_android.ui.screen.sign_up.SignUpScreen
@@ -26,7 +27,7 @@ fun ProteusApp() {
 
             NavHost(
                 navController = appState.navController,
-                startDestination = Routes.SignInScreen.route,
+                startDestination = Routes.NewTaskScreen.route,
                 //startDestination = Routes.ScheduleScreen.route,
             ) {
                 routeGraph(appState)
@@ -56,6 +57,12 @@ fun NavGraphBuilder.routeGraph(appState: ProteusAppState) {
 
     composable(Routes.ScheduleScreen.route) {
         ScheduleScreen(
+            openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) }
+        )
+    }
+
+    composable(Routes.NewTaskScreen.route) {
+        NewTaskScreen(
             openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) }
         )
     }

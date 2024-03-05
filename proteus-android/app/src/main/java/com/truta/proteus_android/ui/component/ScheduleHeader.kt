@@ -32,8 +32,8 @@ fun ScheduleHeader(
     val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
     val month: Int = calendar.get(Calendar.MONTH)+1
     val year: Int = calendar.get(Calendar.YEAR)
-    val weekStartDate = LocalDate.of(year, month, day)
 
+    val weekStartDate = LocalDate.of(year, month, day)
 
     val dates = (0 until 7).map { weekStartDate.plusDays(it.toLong()) }
 

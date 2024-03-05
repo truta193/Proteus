@@ -6,4 +6,5 @@ sealed class Routes(
     data object SignInScreen : Routes("SignInScreen")
     data object SignUpScreen : Routes("SignUpScreen")
     data object ScheduleScreen : Routes("ScheduleScreen")
+    data object NewTaskScreen : Routes("NewTaskScreen")
 }
