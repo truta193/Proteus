@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import java.time.DayOfWeek
 import java.time.LocalDate
+import java.util.Calendar
 
 @Composable
 fun ScheduleHeader(
@@ -22,8 +22,19 @@ fun ScheduleHeader(
 ) {
     val days = listOf("S", "M", "T", "W", "T", "F", "S")
 
+    val calendar = Calendar.getInstance().apply {
+        firstDayOfWeek = Calendar.SUNDAY
+    }
+
     val today = LocalDate.now()
-    val weekStartDate = today.minusDays((today.dayOfWeek.value - DayOfWeek.SUNDAY.value).toLong())
+
+    calendar.set(Calendar.DAY_OF_WEEK, 1)
+    val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
+    val month: Int = calendar.get(Calendar.MONTH)+1
+    val year: Int = calendar.get(Calendar.YEAR)
+    val weekStartDate = LocalDate.of(year, month, day)
+
+
     val dates = (0 until 7).map { weekStartDate.plusDays(it.toLong()) }
 
     Row(modifier = modifier.background(color = MaterialTheme.colorScheme.primary)) {
