@@ -26,9 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.truta.proteus_android.ui.component.Schedule
-import com.truta.proteus_android.ui.component.ScheduleHeader
-import com.truta.proteus_android.ui.component.ScheduleSidebar
+import com.truta.proteus_android.ui.component.schedule.Schedule
+import com.truta.proteus_android.ui.component.schedule.ScheduleHeader
+import com.truta.proteus_android.ui.component.schedule.ScheduleSidebar
 import java.time.LocalTime
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")

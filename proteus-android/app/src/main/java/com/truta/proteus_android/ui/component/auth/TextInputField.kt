@@ -1,4 +1,4 @@
-package com.truta.proteus_android.ui.component
+package com.truta.proteus_android.ui.component.auth
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions

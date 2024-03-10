@@ -1,4 +1,4 @@
-package com.truta.proteus_android.ui.component
+package com.truta.proteus_android.ui.component.schedule
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.truta.proteus_android.model.TaskModel
+import com.truta.proteus_android.ui.component.Task
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 import kotlin.math.roundToInt

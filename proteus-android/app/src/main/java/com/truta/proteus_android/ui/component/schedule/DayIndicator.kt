@@ -1,4 +1,4 @@
-package com.truta.proteus_android.ui.component
+package com.truta.proteus_android.ui.component.schedule
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
