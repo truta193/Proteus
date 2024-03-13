@@ -27,8 +27,9 @@ fun ProteusApp() {
 
             NavHost(
                 navController = appState.navController,
-                startDestination = Routes.NewTaskScreen.route,
+                //startDestination = Routes.NewTaskScreen.route,
                 //startDestination = Routes.ScheduleScreen.route,
+                startDestination = Routes.SignInScreen.route
             ) {
                 routeGraph(appState)
             }

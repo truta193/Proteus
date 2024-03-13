@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.truta.proteus_android.model.TaskModel
-import com.truta.proteus_android.ui.component.Task
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 import kotlin.math.roundToInt
@@ -82,7 +81,7 @@ fun Schedule(
         layout(width, height) {
             placeablesWithTasks.forEach { (placeable, task) ->
                 val eventOffsetMinutes =
-                    ChronoUnit.MINUTES.between(startTime, task.startTime.toLocalTime())
+                    ChronoUnit.MINUTES.between(startTime, task.startTime)
                 val eventY = ((eventOffsetMinutes / 60f) * hourHeight.toPx()).roundToInt()
                 val eventX = task.day * dayWidth.roundToPx()
                 placeable.place(eventX, eventY)

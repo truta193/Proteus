@@ -32,7 +32,8 @@ class StorageService @Inject constructor(
 
     override suspend fun updateSchedule(schedule: ScheduleModel) {
         val scheduleDao = mappingService.scheduleModelToDao(schedule)
-        database.collection(SCHEDULES_COLLECTION).document(schedule.id).set(scheduleDao).await()
+        val oldSchedule = getCurrentScheduleId()
+        database.collection(SCHEDULES_COLLECTION).document(oldSchedule).set(scheduleDao).await()
     }
 
     override suspend fun deleteSchedule(id: String) {
@@ -41,7 +42,17 @@ class StorageService @Inject constructor(
 
     override suspend fun updateScheduleTasks(schedule: ScheduleModel) {
         val scheduleDao = mappingService.scheduleModelToDao(schedule)
-        database.collection(SCHEDULES_COLLECTION).document(schedule.id).update("tasks", scheduleDao.tasks).await()
+        val oldSchedule = getCurrentScheduleId()
+        database.collection(SCHEDULES_COLLECTION).document(oldSchedule)
+            .update("tasks", scheduleDao.tasks).await()
+    }
+
+    override suspend fun getCurrentScheduleId(): String {
+        val ret =
+            database.collection(SCHEDULES_COLLECTION).whereEqualTo("current", true).get().await()
+                .firstOrNull()
+                ?: return ""
+        return ret.id
     }
 
     companion object {

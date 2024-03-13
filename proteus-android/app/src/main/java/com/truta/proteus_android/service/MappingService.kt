@@ -5,15 +5,13 @@ import com.truta.proteus_android.model.ScheduleDao
 import com.truta.proteus_android.model.ScheduleModel
 import com.truta.proteus_android.model.TaskDao
 import com.truta.proteus_android.model.TaskModel
-import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 
 class MappingService @Inject constructor(): IMappingService {
-    private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ISO_LOCAL_TIME
     override fun taskModelToDao(taskModel: TaskModel): TaskDao {
-
-
         return TaskDao(
             id = taskModel.id,
             title = taskModel.title,
@@ -33,8 +31,8 @@ class MappingService @Inject constructor(): IMappingService {
             title = taskDao.title,
             color = Color(taskDao.color),
             abbreviation = taskDao.abbreviation,
-            startTime = LocalDateTime.parse(taskDao.startTime, formatter),
-            endTime = LocalDateTime.parse(taskDao.endTime, formatter),
+            startTime = LocalTime.parse(taskDao.startTime, formatter),
+            endTime = LocalTime.parse(taskDao.endTime, formatter),
             day = taskDao.day,
             location = taskDao.location,
             week = taskDao.week
@@ -43,7 +41,6 @@ class MappingService @Inject constructor(): IMappingService {
 
     override fun scheduleModelToDao(scheduleModel: ScheduleModel): ScheduleDao {
         return ScheduleDao(
-            id = scheduleModel.id,
             title = scheduleModel.title,
             tasks = scheduleModel.tasks.map { taskModelToDao(it) },
             userId = scheduleModel.userId,
@@ -53,7 +50,6 @@ class MappingService @Inject constructor(): IMappingService {
 
     override fun scheduleDaoToModel(scheduleDao: ScheduleDao): ScheduleModel {
         return ScheduleModel(
-            id = scheduleDao.id,
             title = scheduleDao.title,
             tasks = scheduleDao.tasks.map { taskDaoToModel(it) },
             userId = scheduleDao.userId,

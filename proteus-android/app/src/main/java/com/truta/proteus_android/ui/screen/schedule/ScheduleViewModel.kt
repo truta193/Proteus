@@ -1,6 +1,5 @@
 package com.truta.proteus_android.ui.screen.schedule
 
-import android.util.Log
 import com.truta.proteus_android.model.ScheduleModel
 import com.truta.proteus_android.repository.ScheduleRepository
 import com.truta.proteus_android.service.AuthenticationService
@@ -19,7 +18,6 @@ class ScheduleViewModel @Inject constructor(
     val schedules = scheduleRepository.schedules
 
     val currentSchedule: Flow<ScheduleModel?> = schedules.map { schedules ->
-        Log.d("ScheduleViewModel", "currentSchedule: $schedules")
         schedules.firstOrNull { it.isCurrent }
     }
 }

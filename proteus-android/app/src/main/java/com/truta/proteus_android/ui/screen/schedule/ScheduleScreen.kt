@@ -11,8 +11,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -26,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.truta.proteus_android.Routes
 import com.truta.proteus_android.ui.component.schedule.Schedule
 import com.truta.proteus_android.ui.component.schedule.ScheduleHeader
 import com.truta.proteus_android.ui.component.schedule.ScheduleSidebar
@@ -62,7 +69,21 @@ fun ScheduleScreen(
                 totalHeight = it.size.height
             },
         bottomBar = {
-            BottomAppBar(actions = {})
+            BottomAppBar(
+                actions = {
+                          IconButton(onClick = {}) {
+                              Icon(imageVector = Icons.Rounded.Settings, contentDescription = "Settings")
+                          }
+                },
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = {
+                            openAndPopUp(Routes.NewTaskScreen.route, Routes.ScheduleScreen.route)
+                        }
+                    ) {
+                        Icon(imageVector = Icons.Rounded.Add, contentDescription ="New Task")
+                    }
+                })
         }
     ) { paddingValues ->
         Column(
