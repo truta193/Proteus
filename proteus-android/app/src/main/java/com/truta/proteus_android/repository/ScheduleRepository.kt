@@ -31,7 +31,10 @@ class ScheduleRepository @Inject constructor(
                     .whereEqualTo(StorageService.USER_ID_FIELD, user?.id)
                     .dataObjects<ScheduleDao>()
                     .map { scheduleDaoList ->
-                        Log.d("ScheduleRepository", "Got schedules: ${scheduleDaoList.size}, $scheduleDaoList")
+                        Log.d(
+                            "ScheduleRepository",
+                            "Got schedules: ${scheduleDaoList.size}, $scheduleDaoList"
+                        )
                         scheduleDaoList.map { mappingService.scheduleDaoToModel(it) }
                     }
             }
@@ -53,7 +56,12 @@ class ScheduleRepository @Inject constructor(
 
     suspend fun addSchedule(schedule: ScheduleModel) {
         val doc = Firebase.firestore.collection(SCHEDULES_COLLECTION).document()
-        var scheduleDao = mappingService.scheduleModelToDao(schedule.copy(id = doc.id))
+        var scheduleDao = mappingService.scheduleModelToDao(
+            schedule.copy(
+                id = doc.id,
+                userId = authenticationService.currentUserId
+            )
+        )
         val isEmpty = schedules.first().isEmpty()
 
         if (isEmpty) {
@@ -63,17 +71,22 @@ class ScheduleRepository @Inject constructor(
         doc.set(scheduleDao)
     }
 
-//    suspend fun setCurrentSchedule(schedule: ScheduleModel) {
-//        val scheduleDao = mappingService.scheduleModelToDao(schedule)
-//        val currentScheduleId = getCurrentScheduleId()
-//
-//        Firebase.firestore.collection(SCHEDULES_COLLECTION).whereEqualTo(USER_ID_FIELD, schedule.userId).get().addOnSuccessListener { documents ->
-//            for (document in documents) {
-//                document.reference.update("current", false)
-//            }
-//        }
-//        Firebase.firestore.collection(SCHEDULES_COLLECTION).document(schedule.id).set(scheduleDao)
-//    }
+    fun setCurrentSchedule(schedule: ScheduleModel) {
+        val scheduleDao = mappingService.scheduleModelToDao(schedule)
+
+        Firebase.firestore.collection(SCHEDULES_COLLECTION)
+            .whereEqualTo(USER_ID_FIELD, authenticationService.currentUserId).get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    Firebase.firestore.collection(SCHEDULES_COLLECTION).document(document.id)
+                        .update("current", false)
+                }
+                Firebase.firestore.collection(SCHEDULES_COLLECTION).document(schedule.id)
+                    .update("current", true)
+            }
+
+
+    }
 
 
     companion object {
