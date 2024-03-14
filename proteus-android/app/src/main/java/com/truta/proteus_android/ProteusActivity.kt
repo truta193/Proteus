@@ -42,10 +42,13 @@ class ProteusActivity : ComponentActivity() {
 //            "Location 2",
 //            1
 //        )
-//        val s = ScheduleModel("1", "Schedule 1", emptyList(), "NLXU29pHHoNpJ0cmzxKHl9Ct0jI3", true)
+//        val s = ScheduleModel("", "Schedule 2", emptyList(), "NLXU29pHHoNpJ0cmzxKHl9Ct0jI3", true)
 //        val mappingService = MappingService()
 //        db.collection("schedules").add(mappingService.scheduleModelToDao(s))
-
+//        val authenticationService = AuthenticationService()
+//        val mappingService = MappingService()
+//        val scheduleRepository = ScheduleRepository(authenticationService, mappingService)
+//        scheduleRepository.addSchedule(s)
         //val mappingService = MappingService()
         //val storageService = StorageService(mappingService)
 

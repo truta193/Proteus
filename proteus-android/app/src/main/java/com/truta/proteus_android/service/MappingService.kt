@@ -41,6 +41,7 @@ class MappingService @Inject constructor(): IMappingService {
 
     override fun scheduleModelToDao(scheduleModel: ScheduleModel): ScheduleDao {
         return ScheduleDao(
+            id = scheduleModel.id,
             title = scheduleModel.title,
             tasks = scheduleModel.tasks.map { taskModelToDao(it) },
             userId = scheduleModel.userId,
@@ -50,6 +51,7 @@ class MappingService @Inject constructor(): IMappingService {
 
     override fun scheduleDaoToModel(scheduleDao: ScheduleDao): ScheduleModel {
         return ScheduleModel(
+            id = scheduleDao.id,
             title = scheduleDao.title,
             tasks = scheduleDao.tasks.map { taskDaoToModel(it) },
             userId = scheduleDao.userId,

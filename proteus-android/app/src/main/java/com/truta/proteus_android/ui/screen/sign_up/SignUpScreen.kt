@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.truta.proteus_android.Routes
 import com.truta.proteus_android.ui.component.auth.PasswordInputField
-import com.truta.proteus_android.ui.component.auth.TextInputField
+import com.truta.proteus_android.ui.component.TextInputField
 
 @Composable
 fun SignUpScreen(

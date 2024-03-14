@@ -6,6 +6,8 @@ import com.truta.proteus_android.model.ScheduleModel
 interface IStorageService {
     val database: FirebaseFirestore
 
+    suspend fun getAllSchedules(): List<ScheduleModel>
+
     suspend fun addSchedule(schedule: ScheduleModel)
     suspend fun getSchedule(id: String): ScheduleModel?
     suspend fun updateSchedule(schedule: ScheduleModel)

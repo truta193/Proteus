@@ -14,6 +14,14 @@ class StorageService @Inject constructor(
 ) : IStorageService {
     override val database: FirebaseFirestore = Firebase.firestore
 
+    override suspend fun getAllSchedules(): List<ScheduleModel> {
+        val schedules = database.collection(SCHEDULES_COLLECTION).get().await()
+        return schedules.map { schedule ->
+            val scheduleDao = schedule.toObject(ScheduleDao::class.java)
+            mappingService.scheduleDaoToModel(scheduleDao)
+        }
+    }
+
     override suspend fun addSchedule(schedule: ScheduleModel) {
         var scheduleDao = mappingService.scheduleModelToDao(schedule)
         scheduleDao = scheduleDao.copy(userId = Firebase.auth.currentUser?.uid.orEmpty())
