@@ -11,9 +11,9 @@ import com.truta.proteus_android.service.MappingService
 import com.truta.proteus_android.service.StorageService
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 
@@ -51,9 +51,15 @@ class ScheduleRepository @Inject constructor(
                     .map { it }
             }
 
-    fun addSchedule(schedule: ScheduleModel) {
+    suspend fun addSchedule(schedule: ScheduleModel) {
         val doc = Firebase.firestore.collection(SCHEDULES_COLLECTION).document()
-        val scheduleDao = mappingService.scheduleModelToDao(schedule.copy(id = doc.id))
+        var scheduleDao = mappingService.scheduleModelToDao(schedule.copy(id = doc.id))
+        val isEmpty = schedules.first().isEmpty()
+
+        if (isEmpty) {
+            scheduleDao = scheduleDao.copy(isCurrent = true)
+        }
+
         doc.set(scheduleDao)
     }
 
@@ -68,14 +74,6 @@ class ScheduleRepository @Inject constructor(
 //        }
 //        Firebase.firestore.collection(SCHEDULES_COLLECTION).document(schedule.id).set(scheduleDao)
 //    }
-
-    suspend fun getCurrentScheduleId(): String {
-        val ret =
-            Firebase.firestore.collection(StorageService.SCHEDULES_COLLECTION).whereEqualTo("current", true).get().await()
-                .firstOrNull()
-                ?: return ""
-        return ret.id
-    }
 
 
     companion object {

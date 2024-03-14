@@ -1,12 +1,14 @@
 package com.truta.proteus_android.ui.screen.schedule
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
@@ -15,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.DateRange
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -23,6 +26,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -30,8 +34,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.truta.proteus_android.Routes
@@ -49,6 +55,8 @@ fun ScheduleScreen(
     openAndPopUp: (String, String) -> Unit,
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current
+
     val numDays = 7
     val startHour = LocalTime.of(7, 0)
     val endHour = LocalTime.of(22, 0)
@@ -62,10 +70,21 @@ fun ScheduleScreen(
     val horizontalScrollState = rememberScrollState()
 
     val schedules = viewModel.schedules.collectAsState(initial = emptyList())
-
     val currentSchedule = viewModel.currentSchedule.collectAsState(initial = null)
 
     var showNewScheduleSheet by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel
+            .toastMessage
+            .collect { message ->
+                Toast.makeText(
+                    context,
+                    message,
+                    Toast.LENGTH_SHORT,
+                ).show()
+            }
+    }
 
     Scaffold(
         modifier = modifier
@@ -76,19 +95,29 @@ fun ScheduleScreen(
         bottomBar = {
             BottomAppBar(
                 actions = {
-                          IconButton(onClick = {
-                                showNewScheduleSheet = true
-                          }) {
-                              Icon(imageVector = Icons.Rounded.DateRange, contentDescription = "New Schedule")
-                          }
+                    IconButton(onClick = {
+                        showNewScheduleSheet = true
+                    }) {
+                        Icon(
+                            imageVector = Icons.Rounded.DateRange,
+                            contentDescription = "New Schedule"
+                        )
+                    }
                 },
                 floatingActionButton = {
                     FloatingActionButton(
                         onClick = {
-                            openAndPopUp(Routes.NewTaskScreen.route, Routes.ScheduleScreen.route)
+                            if (schedules.value.isNotEmpty()) {
+                                openAndPopUp(
+                                    Routes.NewTaskScreen.route,
+                                    Routes.ScheduleScreen.route
+                                )
+                            } else {
+                                viewModel.sendToastMessage("Please create a schedule first")
+                            }
                         }
                     ) {
-                        Icon(imageVector = Icons.Rounded.Add, contentDescription ="New Task")
+                        Icon(imageVector = Icons.Rounded.Add, contentDescription = "New Task")
                     }
                 })
         }
@@ -106,7 +135,22 @@ fun ScheduleScreen(
                 with(LocalDensity.current) { (totalHeight.toDp() - headerHeight.toDp()) / (endHour.hour - startHour.hour) }
 
             if (schedules.value.isEmpty()) {
-                Text("No schedules found")
+                Box(
+                    modifier = Modifier
+                        .statusBarsPadding()
+                        .padding(paddingValues.calculateBottomPadding())
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text("No schedules found.")
+                        Button(onClick = { showNewScheduleSheet = true }) {
+                            Text(text = "Create a new schedule")
+                        }
+                    }
+                }
             } else {
                 Box(
                     modifier = Modifier
@@ -154,9 +198,9 @@ fun ScheduleScreen(
     }
 
     if (showNewScheduleSheet) {
-         NewScheduleScreen(
-             onDismiss = { showNewScheduleSheet = false },
-         )
+        NewScheduleScreen(
+            onDismiss = { showNewScheduleSheet = false },
+        )
     }
 
 }
