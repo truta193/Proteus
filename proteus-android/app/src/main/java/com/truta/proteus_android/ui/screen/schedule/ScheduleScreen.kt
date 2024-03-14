@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.DateRange
+import androidx.compose.material.icons.rounded.List
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -45,6 +46,7 @@ import com.truta.proteus_android.ui.component.schedule.Schedule
 import com.truta.proteus_android.ui.component.schedule.ScheduleHeader
 import com.truta.proteus_android.ui.component.schedule.ScheduleSidebar
 import com.truta.proteus_android.ui.screen.new_schedule.NewScheduleScreen
+import com.truta.proteus_android.ui.screen.schedule_list.ScheduleListScreen
 import java.time.LocalTime
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -73,6 +75,7 @@ fun ScheduleScreen(
     val currentSchedule = viewModel.currentSchedule.collectAsState(initial = null)
 
     var showNewScheduleSheet by rememberSaveable { mutableStateOf(false) }
+    var showScheduleListSheet by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {
         viewModel
@@ -101,6 +104,14 @@ fun ScheduleScreen(
                         Icon(
                             imageVector = Icons.Rounded.DateRange,
                             contentDescription = "New Schedule"
+                        )
+                    }
+                    IconButton(onClick = {
+                        showScheduleListSheet = true
+                    }) {
+                        Icon(
+                            imageVector = Icons.Rounded.List,
+                            contentDescription = "Select Schedule"
                         )
                     }
                 },
@@ -146,7 +157,10 @@ fun ScheduleScreen(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text("No schedules found.")
-                        Button(onClick = { showNewScheduleSheet = true }) {
+                        Button(onClick = {
+                            showNewScheduleSheet = true
+                            showScheduleListSheet = false
+                        }) {
                             Text(text = "Create a new schedule")
                         }
                     }
@@ -199,7 +213,14 @@ fun ScheduleScreen(
 
     if (showNewScheduleSheet) {
         NewScheduleScreen(
-            onDismiss = { showNewScheduleSheet = false },
+            onDismiss = {
+                showNewScheduleSheet = false
+            },
+        )
+    } else if (showScheduleListSheet) {
+        ScheduleListScreen(
+            onDismiss = { showScheduleListSheet = false },
+            onAdd = { showNewScheduleSheet = true }
         )
     }
 
