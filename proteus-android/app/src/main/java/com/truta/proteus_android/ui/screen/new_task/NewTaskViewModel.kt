@@ -2,7 +2,9 @@ package com.truta.proteus_android.ui.screen.new_task
 
 import android.util.Log
 import androidx.compose.ui.graphics.Color
+import com.truta.proteus_android.Routes
 import com.truta.proteus_android.model.TaskDao
+import com.truta.proteus_android.service.AuthenticationService
 import com.truta.proteus_android.service.MappingService
 import com.truta.proteus_android.service.StorageService
 import com.truta.proteus_android.ui.screen.AppViewModel
@@ -15,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class NewTaskViewModel @Inject constructor(
     val mappingService: MappingService,
-    val storageService: StorageService
+    val storageService: StorageService,
+    val authenticationService: AuthenticationService
 ) : AppViewModel() {
     val title = MutableStateFlow("")
     val day = MutableStateFlow(LocalDate.now().dayOfWeek.value - 1)
@@ -25,6 +28,16 @@ class NewTaskViewModel @Inject constructor(
 
     val possibleDays =
         listOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
+
+    fun initialize(restartApp: (String) -> Unit) {
+        launchCatching(
+            block = {
+                authenticationService.currentUser.collect { user ->
+                    if (user == null) restartApp(Routes.SignInScreen.route)
+                }
+            }
+        )
+    }
 
     fun updateDay(newDay: Int) {
         day.value = newDay
@@ -58,9 +71,12 @@ class NewTaskViewModel @Inject constructor(
                 val schedule = storageService.getSchedule(scheduleId)
                 Log.d("NewTaskViewModel", "Schedule: $schedule")
                 if (schedule != null) {
+                    Log.d("NewTaskViewModel", "Schedule is not null")
                     val newTasks = schedule.tasks.toMutableList()
+                    Log.d("NewTaskViewModel", "Task list: $newTasks")
                     newTasks.add(mappingService.taskDaoToModel(newTask))
                     schedule.tasks = newTasks
+                    Log.d("NewTaskViewModel", "Updated schedule that is sent off to db: $schedule")
                     storageService.updateSchedule(schedule)
                     Log.d("NewTaskViewModel", "Task added")
                 }

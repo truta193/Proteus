@@ -15,7 +15,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.DateRange
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.List
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
@@ -37,11 +37,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.truta.proteus_android.R
 import com.truta.proteus_android.Routes
+import com.truta.proteus_android.ui.component.LogoutAlertDialog
 import com.truta.proteus_android.ui.component.schedule.Schedule
 import com.truta.proteus_android.ui.component.schedule.ScheduleHeader
 import com.truta.proteus_android.ui.component.schedule.ScheduleSidebar
@@ -54,7 +58,8 @@ import java.time.LocalTime
 @Composable
 fun ScheduleScreen(
     modifier: Modifier = Modifier,
-    openAndPopUp: (String, String) -> Unit,
+    restartApp: (String) -> Unit,
+    openScreen: (String) -> Unit,
     viewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -76,6 +81,12 @@ fun ScheduleScreen(
 
     var showNewScheduleSheet by rememberSaveable { mutableStateOf(false) }
     var showScheduleListSheet by rememberSaveable { mutableStateOf(false) }
+
+    var showLogoutDialog by rememberSaveable { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.initialize(restartApp)
+    }
 
     LaunchedEffect(Unit) {
         viewModel
@@ -99,11 +110,12 @@ fun ScheduleScreen(
             BottomAppBar(
                 actions = {
                     IconButton(onClick = {
-                        showNewScheduleSheet = true
+                        showLogoutDialog = true
                     }) {
                         Icon(
-                            imageVector = Icons.Rounded.DateRange,
-                            contentDescription = "New Schedule"
+                            painter = painterResource(id = R.drawable.round_logout_24),
+                            contentDescription = "Select Schedule",
+                            modifier = Modifier.scale(-1.0f, 1.0f)
                         )
                     }
                     IconButton(onClick = {
@@ -119,9 +131,8 @@ fun ScheduleScreen(
                     FloatingActionButton(
                         onClick = {
                             if (schedules.value.isNotEmpty()) {
-                                openAndPopUp(
-                                    Routes.NewTaskScreen.route,
-                                    Routes.ScheduleScreen.route
+                                openScreen(
+                                    Routes.NewTaskScreen.route
                                 )
                             } else {
                                 viewModel.sendToastMessage("Please create a schedule first")
@@ -174,8 +185,10 @@ fun ScheduleScreen(
                         .statusBarsPadding()
                 ) {
                     ScheduleHeader(
-                        dayWidth = trueDayWidth,
-                        numDays = numDays,
+                        dayWidth = with(LocalDensity.current) {
+                            (totalWidth.toDp() - sidebarWidth.toDp()) / 7
+                        },
+                        numDays = 7,
                         modifier = Modifier
                             .padding(start = with(LocalDensity.current) { sidebarWidth.toDp() })
                     )
@@ -221,6 +234,17 @@ fun ScheduleScreen(
         ScheduleListScreen(
             onDismiss = { showScheduleListSheet = false },
             onAdd = { showNewScheduleSheet = true }
+        )
+    } else if (showLogoutDialog) {
+        LogoutAlertDialog(
+            onDismissRequest = { showLogoutDialog = false },
+            onConfirmation = {
+                viewModel.logout()
+                showLogoutDialog = false
+            },
+            dialogTitle = "Logout",
+            dialogText = "Are you sure you want to logout?",
+            icon = Icons.Rounded.Close
         )
     }
 

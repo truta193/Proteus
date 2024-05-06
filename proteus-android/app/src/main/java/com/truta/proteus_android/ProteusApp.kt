@@ -58,13 +58,15 @@ fun NavGraphBuilder.routeGraph(appState: ProteusAppState) {
 
     composable(Routes.ScheduleScreen.route) {
         ScheduleScreen(
-            openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) }
+            restartApp = { route -> appState.clearAndNavigate(route) },
+            openScreen = { route -> appState.navigate(route) }
         )
     }
 
     composable(Routes.NewTaskScreen.route) {
         NewTaskScreen(
-            openAndPopUp = { route, popUp -> appState.navigateAndPopUp(route, popUp) }
+            popUpScreen = { appState.popUp() },
+            restartApp = { route -> appState.clearAndNavigate(route) }
         )
     }
 }

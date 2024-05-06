@@ -1,5 +1,6 @@
 package com.truta.proteus_android.ui.screen.schedule
 
+import com.truta.proteus_android.Routes
 import com.truta.proteus_android.model.ScheduleModel
 import com.truta.proteus_android.repository.ScheduleRepository
 import com.truta.proteus_android.service.AuthenticationService
@@ -26,9 +27,27 @@ class ScheduleViewModel @Inject constructor(
         schedules.firstOrNull { it.isCurrent }
     }
 
+    fun initialize(restartApp: (String) -> Unit) {
+        launchCatching(
+            block = {
+                authenticationService.currentUser.collect { user ->
+                    if (user == null) restartApp(Routes.SignInScreen.route)
+                }
+            }
+        )
+    }
+
     fun sendToastMessage(message: String) {
-        launchCatching (
+        launchCatching(
             block = { _toastMessage.emit(message) }
+        )
+    }
+
+    fun logout() {
+        launchCatching(
+            block = {
+                authenticationService.signOut()
+            }
         )
     }
 }

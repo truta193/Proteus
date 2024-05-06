@@ -10,7 +10,8 @@ import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class StorageService @Inject constructor(
-    private val mappingService: MappingService
+    private val mappingService: MappingService,
+    private val authenticationService: AuthenticationService
 ) : IStorageService {
     override val database: FirebaseFirestore = Firebase.firestore
 
@@ -57,7 +58,10 @@ class StorageService @Inject constructor(
 
     override suspend fun getCurrentScheduleId(): String {
         val ret =
-            database.collection(SCHEDULES_COLLECTION).whereEqualTo("current", true).get().await()
+            database.collection(SCHEDULES_COLLECTION)
+                .whereEqualTo("current", true)
+                .whereEqualTo(USER_ID_FIELD, authenticationService.currentUserId)
+                .get().await()
                 .firstOrNull()
                 ?: return ""
         return ret.id
