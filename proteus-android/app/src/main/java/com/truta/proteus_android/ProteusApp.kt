@@ -11,6 +11,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.truta.proteus_android.ui.screen.new_task.NewTaskScreen
 import com.truta.proteus_android.ui.screen.schedule.ScheduleScreen
 import com.truta.proteus_android.ui.screen.sign_in.SignInScreen
@@ -63,10 +64,15 @@ fun NavGraphBuilder.routeGraph(appState: ProteusAppState) {
         )
     }
 
-    composable(Routes.NewTaskScreen.route) {
+    composable(
+        route = Routes.NewTaskScreen.route + "?taskId={taskId}",
+        arguments = listOf(navArgument("taskId") { defaultValue = "default" })
+    ) {
         NewTaskScreen(
+            taskId = it.arguments?.getString("taskId") ?: "default",
             popUpScreen = { appState.popUp() },
             restartApp = { route -> appState.clearAndNavigate(route) }
         )
     }
+
 }

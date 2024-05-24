@@ -1,9 +1,8 @@
 package com.truta.proteus_android.ui.screen.new_task
 
-import android.util.Log
 import androidx.compose.ui.graphics.Color
 import com.truta.proteus_android.Routes
-import com.truta.proteus_android.model.TaskDao
+import com.truta.proteus_android.model.TaskModel
 import com.truta.proteus_android.service.AuthenticationService
 import com.truta.proteus_android.service.MappingService
 import com.truta.proteus_android.service.StorageService
@@ -20,16 +19,13 @@ class NewTaskViewModel @Inject constructor(
     val storageService: StorageService,
     val authenticationService: AuthenticationService
 ) : AppViewModel() {
-    val title = MutableStateFlow("")
-    val day = MutableStateFlow(LocalDate.now().dayOfWeek.value - 1)
-    val color = MutableStateFlow(Color.Red.value)
-    val startTime = MutableStateFlow("00:00")
-    val endTime = MutableStateFlow("00:00")
+    val task = MutableStateFlow(TaskModel(id = "default5"))
+
 
     val possibleDays =
         listOf("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday")
 
-    fun initialize(restartApp: (String) -> Unit) {
+    fun initialize(taskId: String, restartApp: (String) -> Unit) {
         launchCatching(
             block = {
                 authenticationService.currentUser.collect { user ->
@@ -37,48 +33,69 @@ class NewTaskViewModel @Inject constructor(
                 }
             }
         )
+        launchCatching(block = {
+            task.value = storageService.getTaskFromCurrentScheduleById(taskId)
+                ?: TaskModel(
+                    id = storageService.getSchedule(storageService.getCurrentScheduleId())!!.tasks.size.toString(),
+                    title = "",
+                    day = LocalDate.now().dayOfWeek.value - 1,
+                    color = Color.Red,
+                    startTime = LocalTime.now(),
+                    endTime = LocalTime.now().plusHours(1)
+                )
+        })
     }
 
     fun updateDay(newDay: Int) {
-        day.value = newDay
+        task.value = task.value.copy(day = newDay)
     }
 
     fun updateStartTime(newStartTime: LocalTime) {
-        startTime.value = newStartTime.toString()
+        task.value = task.value.copy(startTime = newStartTime)
     }
 
     fun updateEndTime(newEndTime: LocalTime) {
-        endTime.value = newEndTime.toString()
+        task.value = task.value.copy(endTime = newEndTime)
     }
 
     fun updateTitle(newTitle: String) {
-        title.value = newTitle
+        task.value = task.value.copy(title = newTitle)
     }
 
     fun updateColor(newColor: Color) {
-        color.value = newColor.value
+        task.value = task.value.copy(color = newColor)
     }
 
     fun updateColor(newColor: ULong) {
-        color.value = newColor
+        task.value = task.value.copy(color = Color(newColor))
+    }
+
+    fun deleteTask() {
+        launchCatching(
+            block = {
+                val scheduleId = storageService.getCurrentScheduleId()
+                val schedule = storageService.getSchedule(scheduleId)
+                if (schedule != null) {
+                    val newTasks = schedule.tasks.toMutableList()
+                    newTasks.removeIf { it.id == task.value.id }
+                    schedule.tasks = newTasks
+                    storageService.updateSchedule(schedule)
+                }
+            }
+        )
     }
 
     fun addTask() {
         launchCatching(
             block = {
-                val newTask = TaskDao("0", title.value, color.value, title.value.substring(0, 3), startTime.value, endTime.value, day.value, "", 1)
+                val newTask = mappingService.taskModelToDao(task.value)
                 val scheduleId = storageService.getCurrentScheduleId()
                 val schedule = storageService.getSchedule(scheduleId)
-                Log.d("NewTaskViewModel", "Schedule: $schedule")
                 if (schedule != null) {
-                    Log.d("NewTaskViewModel", "Schedule is not null")
                     val newTasks = schedule.tasks.toMutableList()
-                    Log.d("NewTaskViewModel", "Task list: $newTasks")
                     newTasks.add(mappingService.taskDaoToModel(newTask))
                     schedule.tasks = newTasks
-                    Log.d("NewTaskViewModel", "Updated schedule that is sent off to db: $schedule")
                     storageService.updateSchedule(schedule)
-                    Log.d("NewTaskViewModel", "Task added")
                 }
             }
         )

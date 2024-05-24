@@ -27,7 +27,7 @@ fun InputCard(
     viewModel: NewTaskViewModel = hiltViewModel()
 ) {
 
-    val title = viewModel.title.collectAsState()
+    val task = viewModel.task.collectAsState()
 
     Card(
         modifier = modifier
@@ -61,13 +61,13 @@ fun InputCard(
 //                onValueChange = {viewModel.updateTitle(it)},
 //            )
             BasicTextField(
-                value = title.value,
+                value = task.value.title,
                 modifier = Modifier.padding(0.dp),
                 onValueChange = { viewModel.updateTitle(it) },
                 textStyle = MaterialTheme.typography.titleMedium.copy(color = MaterialTheme.colorScheme.onSurface),
                 decorationBox = { innerTextField ->
                     Row(modifier = Modifier.fillMaxWidth()) {
-                        if (title.value.isEmpty()) {
+                        if (task.value.title.isEmpty()) {
                             Text(
                                 text = "Title",
                                 style = MaterialTheme.typography.titleMedium

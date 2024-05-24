@@ -1,5 +1,6 @@
 package com.truta.proteus_android.ui.component.schedule
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -13,7 +14,9 @@ import androidx.compose.ui.layout.ParentDataModifier
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.truta.proteus_android.model.TaskModel
+import com.truta.proteus_android.ui.screen.schedule.ScheduleViewModel
 import java.time.LocalTime
 import java.time.temporal.ChronoUnit
 import kotlin.math.roundToInt
@@ -28,6 +31,8 @@ fun Schedule(
     startTime: LocalTime,
     endTime: LocalTime,
     numDays: Int,
+    openScreen: (String) -> Unit,
+    viewModel: ScheduleViewModel = hiltViewModel()
 ) {
     val dividerColor =
         if (MaterialTheme.colorScheme.background.luminance() > 0.5) Color.LightGray else Color.DarkGray
@@ -37,7 +42,11 @@ fun Schedule(
     Layout(
         content = {
             tasks.sortedBy(TaskModel::startTime).forEach { task ->
-                Box(modifier = Modifier.eventData(task)) {
+                Box(modifier = Modifier
+                    .eventData(task)
+                    .clickable {
+                        viewModel.onTaskClicked(task, openScreen)
+                    }) {
                     Task(task)
                 }
             }

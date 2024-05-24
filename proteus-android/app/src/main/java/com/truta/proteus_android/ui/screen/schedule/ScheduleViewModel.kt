@@ -2,6 +2,7 @@ package com.truta.proteus_android.ui.screen.schedule
 
 import com.truta.proteus_android.Routes
 import com.truta.proteus_android.model.ScheduleModel
+import com.truta.proteus_android.model.TaskModel
 import com.truta.proteus_android.repository.ScheduleRepository
 import com.truta.proteus_android.service.AuthenticationService
 import com.truta.proteus_android.ui.screen.AppViewModel
@@ -40,6 +41,14 @@ class ScheduleViewModel @Inject constructor(
     fun sendToastMessage(message: String) {
         launchCatching(
             block = { _toastMessage.emit(message) }
+        )
+    }
+
+    fun onTaskClicked(task: TaskModel, openScreen: (String) -> Unit) {
+        launchCatching(
+            block = {
+                openScreen(Routes.NewTaskScreen.route + "?taskId=${task.id}")
+            }
         )
     }
 

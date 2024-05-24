@@ -214,6 +214,7 @@ fun ScheduleScreen(
                         numDays = numDays,
                         startTime = startHour,
                         endTime = endHour,
+                        openScreen = openScreen,
                         modifier = Modifier
                             .weight(1f)
                             .verticalScroll(verticalScrollState)

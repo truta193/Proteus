@@ -2,6 +2,7 @@ package com.truta.proteus_android.service
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.truta.proteus_android.model.ScheduleModel
+import com.truta.proteus_android.model.TaskModel
 
 interface IStorageService {
     val database: FirebaseFirestore
@@ -16,4 +17,6 @@ interface IStorageService {
     suspend fun updateScheduleTasks(schedule: ScheduleModel)
     suspend fun deleteSchedule(id: String)
     suspend fun getCurrentScheduleId(): String
+
+    suspend fun getTaskFromCurrentScheduleById(id: String): TaskModel?
 }

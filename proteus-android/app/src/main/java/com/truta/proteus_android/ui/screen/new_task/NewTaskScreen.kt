@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -47,6 +48,10 @@ import com.truta.proteus_android.ui.component.InputCard
 import com.truta.proteus_android.ui.component.OptionCard
 import com.truta.proteus_android.ui.component.TimePickerDialog
 import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+
+
+
 
 //TODO: When selecting start time, set the state to +1 hour so the end time is always after the start time
 //TODO: Same thing but -1 hour for the end time
@@ -55,6 +60,7 @@ import java.time.LocalTime
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewTaskScreen(
+    taskId: String,
     popUpScreen: () -> Unit,
     restartApp: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -69,19 +75,22 @@ fun NewTaskScreen(
     var startTimeTrigger by rememberSaveable { mutableStateOf(false) }
     var endTimeTrigger by rememberSaveable { mutableStateOf(false) }
 
-    val dayIndex = viewModel.day.collectAsState()
-    val color = viewModel.color.collectAsState()
-    val startTime = viewModel.startTime.collectAsState()
-    val endTime = viewModel.endTime.collectAsState()
+//    val dayIndex = viewModel.task.value.day.collectAsState()
+//    val color = viewModel.color.collectAsState()
+//    val startTime = viewModel.startTime.collectAsState()
+//    val endTime = viewModel.endTime.collectAsState()
+    val task = viewModel.task.collectAsState()
 
     val sheetState = rememberModalBottomSheetState()
-    var timeState = rememberTimePickerState(
-        LocalTime.parse(startTime.value).hour,
-        LocalTime.parse(startTime.value).minute,
+    val timeState = rememberTimePickerState(
+        LocalTime.parse(task.value.startTime.toString()).hour,
+        LocalTime.parse(task.value.startTime.toString()).minute,
         true
     )
 
-    LaunchedEffect(Unit) { viewModel.initialize(restartApp) }
+    val formatter = DateTimeFormatter.ofPattern("HH:mm")
+
+    LaunchedEffect(Unit) { viewModel.initialize(taskId, restartApp) }
 
     Scaffold(
         modifier = modifier,
@@ -92,6 +101,14 @@ fun NewTaskScreen(
                         popUpScreen()
                     }) {
                         Icon(imageVector = Icons.Rounded.Close, contentDescription = "Cancel")
+                    }
+                    if (taskId != "default") {
+                        IconButton(onClick = {
+                            viewModel.deleteTask()
+                            popUpScreen()
+                        }) {
+                            Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Task")
+                        }
                     }
                 },
                 floatingActionButton = {
@@ -121,7 +138,7 @@ fun NewTaskScreen(
 
             OptionCard(
                 title = "Day",
-                selectionTitle = viewModel.possibleDays[dayIndex.value],
+                selectionTitle = viewModel.possibleDays[task.value.day],
                 modifier = Modifier.padding(16.dp),
                 onClick = {
                     showBottomSheet = true
@@ -132,8 +149,8 @@ fun NewTaskScreen(
 
             DoubleOptionCard(
                 title = "Time",
-                selectionTitleLeft = startTime.value,
-                selectionTitleRight = endTime.value,
+                selectionTitleLeft = task.value.startTime.format(formatter),
+                selectionTitleRight = task.value.endTime.format(formatter),
                 modifier = Modifier.padding(16.dp),
                 onClickLeft = {
                     showTimePicker = true

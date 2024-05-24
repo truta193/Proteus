@@ -38,7 +38,7 @@ fun ColorCard(
     onClick: () -> Unit
 ) {
 
-    val color = viewModel.color.collectAsState()
+    val task = viewModel.task.collectAsState()
 
     Card(
         modifier = modifier
@@ -64,7 +64,7 @@ fun ColorCard(
                 modifier = Modifier
                     .size(20.dp)
                     .clip(CircleShape)
-                    .background(Color(color.value))
+                    .background(Color(task.value.color.value))
             )
 
             Icon(imageVector = Icons.Rounded.KeyboardArrowRight, contentDescription = "Select color")

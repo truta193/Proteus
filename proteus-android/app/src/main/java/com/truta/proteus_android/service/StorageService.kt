@@ -6,6 +6,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.truta.proteus_android.model.ScheduleDao
 import com.truta.proteus_android.model.ScheduleModel
+import com.truta.proteus_android.model.TaskModel
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -65,6 +66,12 @@ class StorageService @Inject constructor(
                 .firstOrNull()
                 ?: return ""
         return ret.id
+    }
+
+    override suspend fun getTaskFromCurrentScheduleById(id: String): TaskModel? {
+        val currentScheduleId = getCurrentScheduleId()
+        val schedule = getSchedule(currentScheduleId) ?: return null
+        return schedule.tasks.find { it.id == id }
     }
 
     companion object {

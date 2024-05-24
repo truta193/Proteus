@@ -25,7 +25,7 @@ fun Task(
             .padding(4.dp)
     ) {
         Text(
-            text = task.abbreviation,
+            text = task.title,
             style = MaterialTheme.typography.titleMedium
         )
         Text(
