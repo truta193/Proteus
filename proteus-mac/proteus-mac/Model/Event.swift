@@ -10,7 +10,7 @@ import SwiftUI
 import FirebaseFirestore
 
 struct Event: Identifiable, Hashable, Codable {
-    @DocumentID var id: String?
+    var id: String
     
     var title: String
     var day: String
@@ -19,6 +19,7 @@ struct Event: Identifiable, Hashable, Codable {
     //var color: Color
     
     init(title: String, day: String, startTime: Double, durationHours: Double, color: Color) {
+        self.id = UUID().uuidString
         self.title = title
         self.day = day
         self.startTime = startTime
