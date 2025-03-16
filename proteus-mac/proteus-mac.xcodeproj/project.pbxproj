@@ -1,0 +1,602 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B138733D2D734CE20016DDCC /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B138733C2D734CE20016DDCC /* FirebaseAuth */; };
+		B138734C2D7399C20016DDCC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = B138734B2D7399C20016DDCC /* FirebaseFirestore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B16F38002D6A457500AF3726 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B16F37E62D6A457300AF3726 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B16F37ED2D6A457300AF3726;
+			remoteInfo = "proteus-mac";
+		};
+		B16F380A2D6A457500AF3726 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B16F37E62D6A457300AF3726 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B16F37ED2D6A457300AF3726;
+			remoteInfo = "proteus-mac";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B16F37EE2D6A457300AF3726 /* proteus-mac.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "proteus-mac.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B16F37FF2D6A457500AF3726 /* proteus-macTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "proteus-macTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B16F38092D6A457500AF3726 /* proteus-macUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "proteus-macUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		B16F37F02D6A457300AF3726 /* proteus-mac */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "proteus-mac";
+			sourceTree = "<group>";
+		};
+		B16F38022D6A457500AF3726 /* proteus-macTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "proteus-macTests";
+			sourceTree = "<group>";
+		};
+		B16F380C2D6A457500AF3726 /* proteus-macUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "proteus-macUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B16F37EB2D6A457300AF3726 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B138733D2D734CE20016DDCC /* FirebaseAuth in Frameworks */,
+				B138734C2D7399C20016DDCC /* FirebaseFirestore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B16F37FC2D6A457500AF3726 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B16F38062D6A457500AF3726 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B138734A2D7399C20016DDCC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B16F37E52D6A457300AF3726 = {
+			isa = PBXGroup;
+			children = (
+				B16F37F02D6A457300AF3726 /* proteus-mac */,
+				B16F38022D6A457500AF3726 /* proteus-macTests */,
+				B16F380C2D6A457500AF3726 /* proteus-macUITests */,
+				B138734A2D7399C20016DDCC /* Frameworks */,
+				B16F37EF2D6A457300AF3726 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B16F37EF2D6A457300AF3726 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B16F37EE2D6A457300AF3726 /* proteus-mac.app */,
+				B16F37FF2D6A457500AF3726 /* proteus-macTests.xctest */,
+				B16F38092D6A457500AF3726 /* proteus-macUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B16F37ED2D6A457300AF3726 /* proteus-mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B16F38132D6A457500AF3726 /* Build configuration list for PBXNativeTarget "proteus-mac" */;
+			buildPhases = (
+				B16F37EA2D6A457300AF3726 /* Sources */,
+				B16F37EB2D6A457300AF3726 /* Frameworks */,
+				B16F37EC2D6A457300AF3726 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B16F37F02D6A457300AF3726 /* proteus-mac */,
+			);
+			name = "proteus-mac";
+			packageProductDependencies = (
+				B138733C2D734CE20016DDCC /* FirebaseAuth */,
+				B138734B2D7399C20016DDCC /* FirebaseFirestore */,
+			);
+			productName = "proteus-mac";
+			productReference = B16F37EE2D6A457300AF3726 /* proteus-mac.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B16F37FE2D6A457500AF3726 /* proteus-macTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B16F38162D6A457500AF3726 /* Build configuration list for PBXNativeTarget "proteus-macTests" */;
+			buildPhases = (
+				B16F37FB2D6A457500AF3726 /* Sources */,
+				B16F37FC2D6A457500AF3726 /* Frameworks */,
+				B16F37FD2D6A457500AF3726 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B16F38012D6A457500AF3726 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B16F38022D6A457500AF3726 /* proteus-macTests */,
+			);
+			name = "proteus-macTests";
+			packageProductDependencies = (
+			);
+			productName = "proteus-macTests";
+			productReference = B16F37FF2D6A457500AF3726 /* proteus-macTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B16F38082D6A457500AF3726 /* proteus-macUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B16F38192D6A457500AF3726 /* Build configuration list for PBXNativeTarget "proteus-macUITests" */;
+			buildPhases = (
+				B16F38052D6A457500AF3726 /* Sources */,
+				B16F38062D6A457500AF3726 /* Frameworks */,
+				B16F38072D6A457500AF3726 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B16F380B2D6A457500AF3726 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				B16F380C2D6A457500AF3726 /* proteus-macUITests */,
+			);
+			name = "proteus-macUITests";
+			packageProductDependencies = (
+			);
+			productName = "proteus-macUITests";
+			productReference = B16F38092D6A457500AF3726 /* proteus-macUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B16F37E62D6A457300AF3726 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					B16F37ED2D6A457300AF3726 = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					B16F37FE2D6A457500AF3726 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = B16F37ED2D6A457300AF3726;
+					};
+					B16F38082D6A457500AF3726 = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = B16F37ED2D6A457300AF3726;
+					};
+				};
+			};
+			buildConfigurationList = B16F37E92D6A457300AF3726 /* Build configuration list for PBXProject "proteus-mac" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B16F37E52D6A457300AF3726;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B13873392D734CE20016DDCC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = B16F37EF2D6A457300AF3726 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B16F37ED2D6A457300AF3726 /* proteus-mac */,
+				B16F37FE2D6A457500AF3726 /* proteus-macTests */,
+				B16F38082D6A457500AF3726 /* proteus-macUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B16F37EC2D6A457300AF3726 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B16F37FD2D6A457500AF3726 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B16F38072D6A457500AF3726 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B16F37EA2D6A457300AF3726 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B16F37FB2D6A457500AF3726 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B16F38052D6A457500AF3726 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B16F38012D6A457500AF3726 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B16F37ED2D6A457300AF3726 /* proteus-mac */;
+			targetProxy = B16F38002D6A457500AF3726 /* PBXContainerItemProxy */;
+		};
+		B16F380B2D6A457500AF3726 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B16F37ED2D6A457300AF3726 /* proteus-mac */;
+			targetProxy = B16F380A2D6A457500AF3726 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		B16F38112D6A457500AF3726 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		B16F38122D6A457500AF3726 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				EXCLUDED_ARCHS = "";
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+			};
+			name = Release;
+		};
+		B16F38142D6A457500AF3726 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "proteus-mac/proteus_mac.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"proteus-mac/Preview Content\"";
+				DEVELOPMENT_TEAM = J7LCFZ2BNU;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "truta193.proteus-mac";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B16F38152D6A457500AF3726 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "proteus-mac/proteus_mac.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"proteus-mac/Preview Content\"";
+				DEVELOPMENT_TEAM = J7LCFZ2BNU;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				NEW_SETTING = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "truta193.proteus-mac";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B16F38172D6A457500AF3726 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J7LCFZ2BNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "truta193.proteus-macTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/proteus-mac.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/proteus-mac";
+			};
+			name = Debug;
+		};
+		B16F38182D6A457500AF3726 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J7LCFZ2BNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "truta193.proteus-macTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/proteus-mac.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/proteus-mac";
+			};
+			name = Release;
+		};
+		B16F381A2D6A457500AF3726 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J7LCFZ2BNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "truta193.proteus-macUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "proteus-mac";
+			};
+			name = Debug;
+		};
+		B16F381B2D6A457500AF3726 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = J7LCFZ2BNU;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "truta193.proteus-macUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "proteus-mac";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B16F37E92D6A457300AF3726 /* Build configuration list for PBXProject "proteus-mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B16F38112D6A457500AF3726 /* Debug */,
+				B16F38122D6A457500AF3726 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B16F38132D6A457500AF3726 /* Build configuration list for PBXNativeTarget "proteus-mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B16F38142D6A457500AF3726 /* Debug */,
+				B16F38152D6A457500AF3726 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B16F38162D6A457500AF3726 /* Build configuration list for PBXNativeTarget "proteus-macTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B16F38172D6A457500AF3726 /* Debug */,
+				B16F38182D6A457500AF3726 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B16F38192D6A457500AF3726 /* Build configuration list for PBXNativeTarget "proteus-macUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B16F381A2D6A457500AF3726 /* Debug */,
+				B16F381B2D6A457500AF3726 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B13873392D734CE20016DDCC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B138733C2D734CE20016DDCC /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B13873392D734CE20016DDCC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		B138734B2D7399C20016DDCC /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B13873392D734CE20016DDCC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = B16F37E62D6A457300AF3726 /* Project object */;
+}
