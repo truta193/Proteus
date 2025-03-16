@@ -13,10 +13,12 @@ struct Schedule: Identifiable, Hashable, Codable {
     
     var title: String
     var events: [Event]
+    var userId: String
     
-    init (title: String, events: [Event] = []) {
+    init (title: String, events: [Event] = [], userId: String) {
         self.title = title
         self.events = events
+        self.userId = userId
     }
     
     static func == (lhs: Schedule, rhs: Schedule) -> Bool {
@@ -32,7 +34,7 @@ struct Schedule: Identifiable, Hashable, Codable {
     }
     
     static func example() -> Schedule {
-        Schedule(title: "Example Schedule", events: [Event.example()])
+        Schedule(title: "Example Schedule", events: [Event.example()], userId: "Ou8orPL8VtSuT4PnCiYPWPcb8RG2")
     }
     
     static func examples() -> [Schedule] {

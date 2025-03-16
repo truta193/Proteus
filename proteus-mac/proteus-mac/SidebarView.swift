@@ -14,8 +14,8 @@ struct SidebarView: View {
     private var activeScheduleId: String? {
         return firestoreManager.userPreferences?.activeSchedule
     }
-    //@State private var isShowingNewScheduleSheet = false
     
+    @State private var isShowingNewScheduleSheet = false
     @State private var selectedScheduleId: String?
     
     var body: some View {
@@ -52,7 +52,7 @@ struct SidebarView: View {
         .safeAreaInset(edge: .bottom) {
             HStack {
                 Button(action: {
-                    //isShowingNewScheduleSheet = true
+                    isShowingNewScheduleSheet = true
                     
                 }) {
                     HStack() {
@@ -69,12 +69,13 @@ struct SidebarView: View {
             }
             .padding()
         }
-        //        .sheet(isPresented: $isShowingNewScheduleSheet) {
-        //            Label("Hello, World!", systemImage: "plus.circle")
-        //                .presentationDetents([.medium, .large])
-        //                .presentationBackgroundInteraction(.automatic)
-        //                .presentationBackground(.regularMaterial)
-        //        }
+        .sheet(isPresented: $isShowingNewScheduleSheet) {
+            EditScheduleView(isShowingSheet: $isShowingNewScheduleSheet)
+                .presentationDetents([.medium, .large])
+                .presentationBackgroundInteraction(.automatic)
+                .presentationBackground(.regularMaterial)
+                .padding()
+        }
     }
 }
 

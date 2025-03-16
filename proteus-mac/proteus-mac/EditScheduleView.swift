@@ -9,30 +9,88 @@ import Foundation
 import SwiftUI
 
 struct EditScheduleView: View {
+    @Environment(FirestoreManager.self) var firestoreManager
+    @Environment(AuthViewModel.self) var authViewModel
     
-    @Binding var firstName: String
-    @Binding var lastName: String
-    @State private var startTime = Date()
-    @State private var endTime = Date()
-    @State private var name: String = "Test"
+    @State private var title: String
+    
+    @Binding var isShowingSheet: Bool
+    private let scheduleId: String?
+    
+    init(schedule: Schedule, isShowingSheet: Binding<Bool>) {
+        self._title = State(initialValue: schedule.title)
+        
+        self._isShowingSheet = isShowingSheet
+        self.scheduleId = schedule.id
+    }
+    
+    init(isShowingSheet: Binding<Bool>) {
+        self._title = State(initialValue: "")
+        self._isShowingSheet = isShowingSheet
+        self.scheduleId = nil
+    }
     
     var body: some View {
-        HStack {
+        NavigationStack {
             Form {
-                DatePicker("Begin Time", selection: $startTime, displayedComponents: .hourAndMinute)
-                DatePicker("End Time", selection: $endTime, displayedComponents: .hourAndMinute)
-                TextField("Name", text: $name)
-                TextField("First Name", text: $firstName)
-                TextField("Last Name", text: $lastName)
+                TextField("Schedule Title", text: $title)
             }
-        }.padding()
+            .navigationTitle(scheduleId == nil ? "New Schedule" : "Edit Schedule")
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") {
+                        isShowingSheet = false
+                    }
+                }
+                
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(scheduleId == nil ? "Create" : "Save") {
+                        saveSchedule()
+                    }
+                }
+            }
+        }
+    }
+    
+    private func saveSchedule() {
+        Task {
+            do {
+                if let scheduleId = scheduleId {
+                    if let schedule = try await firestoreManager.getSchedule(id: scheduleId) {
+                        var updatedSchedule = Schedule(
+                            title: title,
+                            events: [],
+                            userId: schedule.userId
+                        )
+                        updatedSchedule.id = scheduleId
+                        
+                        try await firestoreManager.updateSchedule(schedule: updatedSchedule)
+                    }
+                    
+                } else {
+                    if let uid = authViewModel.user?.uid {
+                        let newSchedule = Schedule(
+                            title: title,
+                            userId: uid
+                        )
+                        
+                        try await firestoreManager.createSchedule(schedule: newSchedule)
+                    }
+                }
+                
+                await MainActor.run {
+                    isShowingSheet = false
+                }
+            } catch {
+                print("Error saving schedule: \(error)")
+            }
+        }
     }
 }
 
 #Preview {
     EditScheduleView(
-        firstName: .constant("John"),
-        lastName: .constant("Doe")
+        isShowingSheet: .constant(true)
     )
 }
 

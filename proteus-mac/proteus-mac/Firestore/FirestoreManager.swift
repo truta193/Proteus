@@ -91,6 +91,40 @@ class FirestoreManager {
         }
     }
     
+    func updateSchedule(schedule: Schedule) async throws {
+        guard let scheduleId = schedule.id else {
+            throw NSError(domain: "FirestoreError", code: 400, userInfo: [NSLocalizedDescriptionKey: "Cannot update schedule without an ID"])
+        }
+        
+        do {
+            let docRef = database.collection(Collections.schedules.rawValue).document(scheduleId)
+            try docRef.setData(from: schedule, merge: true)
+            
+            print("Schedule '\(schedule.title)' updated successfully")
+        } catch {
+            print("Error updating schedule: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
+    func getSchedule(id: String) async throws -> Schedule? {
+        do {
+            let docRef = database.collection(Collections.schedules.rawValue).document(id)
+            let documentSnapshot = try await docRef.getDocument()
+            
+            if documentSnapshot.exists {
+                let schedule = try documentSnapshot.data(as: Schedule.self)
+                return schedule
+            } else {
+                print("No schedule found with ID: \(id)")
+                return nil
+            }
+        } catch {
+            print("Error fetching schedule: \(error.localizedDescription)")
+            throw error
+        }
+    }
+    
     func listenToUserPreferences(user: User) {
         userPreferencesListener = database.collection(Collections.users.rawValue)
             .document(user.uid)
